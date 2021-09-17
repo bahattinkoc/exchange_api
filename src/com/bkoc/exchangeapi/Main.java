@@ -76,6 +76,19 @@ public class Main {
         HashMap<String, BigDecimal> tickerKucoin = Kucoin.ticker24hr("BTC-USDT");
         System.out.println("LastPrice: " + tickerKucoin.get("lastPrice") + "\nPrice Change: " + tickerKucoin.get("priceChange") + "\nPercent: " + tickerKucoin.get("priceChangePercent") + "\nVolume: " + tickerKucoin.get("volume"));*/
 
+        //COINBASEPRO
+        /*List<String> symbolsCoinbasePro = CoinbasePro.getSymbols();
+        for (String i : symbolsCoinbasePro)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsCoinbasePro.size());
+        List<Candlestick> candlesticksCoinbasePro = CoinbasePro.klines("BTC-USDT", Interval.INT_1HOUR);
+        List<BigDecimal> candlesticksCoinbaseProList = CoinbasePro.getValuesOfCandlestics(candlesticksCoinbasePro, General.OHLCV.CLOSE);
+        for (BigDecimal i :candlesticksCoinbaseProList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerCoinbasePro = CoinbasePro.ticker24hr("BTC-USDT");
+        System.out.println("LastPrice: " + tickerCoinbasePro.get("lastPrice") + "\nPrice Change: " + tickerCoinbasePro.get("priceChange") + "\nPercent: " + tickerCoinbasePro.get("priceChangePercent") + "\nVolume: " + tickerCoinbasePro.get("volume"));*/
 
+        //BITHUMB
+        
     }
 }

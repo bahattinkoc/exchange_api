@@ -271,8 +271,6 @@ public class Kraken extends General { // https://api.kraken.com/0/public/
                 .getAsJsonObject().get(symbol)
                 .getAsJsonObject().get("o").getAsBigDecimal();
 
-
-
         BigDecimal close = JsonParser
                 .parseString(json)
                 .getAsJsonObject().get("result")
