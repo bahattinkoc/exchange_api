@@ -44,7 +44,7 @@ public class CoinbasePro extends General { // https://api.pro.coinbase.com
         */
 
         JsonArray symbolsList = JsonParser
-                .parseString(response("https://api.pro.coinbase.com/products?"))
+                .parseString(response("https://api.pro.coinbase.com/products"))
                 .getAsJsonArray();
 
         List<String> list = new LinkedList<>();

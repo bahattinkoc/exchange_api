@@ -3,6 +3,7 @@ package com.bkoc.exchangeapi;
 import com.bkoc.exchangeapi.exchanges.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 
@@ -89,6 +90,15 @@ public class Main {
         System.out.println("LastPrice: " + tickerCoinbasePro.get("lastPrice") + "\nPrice Change: " + tickerCoinbasePro.get("priceChange") + "\nPercent: " + tickerCoinbasePro.get("priceChangePercent") + "\nVolume: " + tickerCoinbasePro.get("volume"));*/
 
         //BITHUMB
-        
+        /*List<String> symbolsBithumb = Bithumb.getSymbols();
+        for (String i : symbolsBithumb)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsBithumb.size());
+        List<Candlestick> candlesticksBithumb = Bithumb.klines("BTC_KRW", Interval.INT_30MIN);
+        List<BigDecimal> candlesticksBithumbList = Bithumb.getValuesOfCandlestics(candlesticksBithumb, General.OHLCV.CLOSE);
+        for (BigDecimal i :candlesticksBithumbList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerBithumb = Bithumb.ticker24hr("BTC_KRW");
+        System.out.println("LastPrice: " + tickerBithumb.get("lastPrice") + "\nPrice Change: " + tickerBithumb.get("priceChange") + "\nPercent: " + tickerBithumb.get("priceChangePercent") + "\nVolume: " + tickerBithumb.get("volume"));*/
     }
 }
