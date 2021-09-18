@@ -2,6 +2,7 @@ package com.bkoc.exchangeapi;
 
 import com.bkoc.exchangeapi.exchanges.*;
 
+import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
@@ -100,5 +101,16 @@ public class Main {
             System.out.println(i.setScale(2, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerBithumb = Bithumb.ticker24hr("BTC_KRW");
         System.out.println("LastPrice: " + tickerBithumb.get("lastPrice") + "\nPrice Change: " + tickerBithumb.get("priceChange") + "\nPercent: " + tickerBithumb.get("priceChangePercent") + "\nVolume: " + tickerBithumb.get("volume"));*/
+
+        //OKEX
+        /*List<String> symbolsOkex = Okex.getSymbols();
+        for (String i : symbolsOkex)
+            System.out.println(i);
+        List<Candlestick> candlesticksOkex = Okex.klines("BTC-USDT", Interval.INT_4HOURS);
+        List<BigDecimal> candlesticksOkexList = Bithumb.getValuesOfCandlestics(candlesticksOkex, General.OHLCV.CLOSE);
+        for (BigDecimal i :candlesticksOkexList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerOkex = Okex.ticker24hr("BTC-USDT");
+        System.out.println("LastPrice: " + tickerOkex.get("lastPrice") + "\nPrice Change: " + tickerOkex.get("priceChange") + "\nPercent: " + tickerOkex.get("priceChangePercent") + "\nVolume: " + tickerOkex.get("volume"));*/
     }
 }
