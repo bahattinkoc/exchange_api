@@ -5,6 +5,7 @@ import com.bkoc.exchangeapi.General;
 import com.bkoc.exchangeapi.Interval;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class Okex extends General { // https://www.okex.com
         JsonObject tickerJson = JsonParser
                 .parseString(response("https://www.okex.com/api/spot/v3/instruments/" + symbol + "/ticker"))
                 .getAsJsonObject();
-        System.out.println(tickerJson);
+
         BigDecimal open = tickerJson.get("open_utc0").getAsBigDecimal();
         BigDecimal close = tickerJson.get("last").getAsBigDecimal();
 

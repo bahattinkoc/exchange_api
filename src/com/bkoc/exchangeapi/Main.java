@@ -112,5 +112,20 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerOkex = Okex.ticker24hr("BTC-USDT");
         System.out.println("LastPrice: " + tickerOkex.get("lastPrice") + "\nPrice Change: " + tickerOkex.get("priceChange") + "\nPercent: " + tickerOkex.get("priceChangePercent") + "\nVolume: " + tickerOkex.get("volume"));*/
+
+        //BITFINEX
+        /*List<String> symbolsBitfinex = Bitfinex.getSymbols();
+        for (String i : symbolsBitfinex)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsBitfinex.size());
+        List<Candlestick> candlesticksBitfinex = Bitfinex.klines("BTCUSD", Interval.INT_1HOUR);
+        List<BigDecimal> csBitfinexList = Bitfinex.getValuesOfCandlestics(candlesticksBitfinex, General.OHLCV.CLOSE);
+        for (BigDecimal i : csBitfinexList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerBitfinex = Bitfinex.ticker24hr(symbolsBitfinex.get(20));
+        System.out.println(symbolsBitfinex.get(20));
+        System.out.println("LastPrice: " + tickerBitfinex.get("lastPrice") + "\nPrice Change: " + tickerBitfinex.get("priceChange") + "\nPercent: " + tickerBitfinex.get("priceChangePercent") + "\nVolume: " + tickerBitfinex.get("volume"));*/
+
+        //
     }
 }
