@@ -185,6 +185,16 @@ public class Main {
         HashMap<String, BigDecimal> tickerCryptocom = Cryptocom.ticker24hr("BTC_USDT");
         System.out.println("LastPrice: " + tickerCryptocom.get("lastPrice") + "\nPrice Change: " + tickerCryptocom.get("priceChange") + "\nPercent: " + tickerCryptocom.get("priceChangePercent") + "\nVolume: " + tickerCryptocom.get("volume"));*/
 
-
+        //BTCTURK
+        /*List<String> symbolsBtcTurk = BtcTurk.getSymbols();
+        for (String i : symbolsBtcTurk)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsBtcTurk.size());
+        List<Candlestick> closesBtcTurk = BtcTurk.klines("BTC_USDT");
+        List<BigDecimal> closesBtcTurkList = BtcTurk.getValuesOfCandlestics(closesBtcTurk, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesBtcTurkList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerBtcTurk = BtcTurk.ticker24hr("BTC_USDT");
+        System.out.println("LastPrice: " + tickerBtcTurk.get("lastPrice") + "\nPrice Change: " + tickerBtcTurk.get("priceChange") + "\nPercent: " + tickerBtcTurk.get("priceChangePercent") + "\nVolume: " + tickerBtcTurk.get("volume"));*/
     }
 }
