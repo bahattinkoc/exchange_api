@@ -30,7 +30,6 @@ public class Bitstamp extends General { // https://www.bitstamp.net/api/v2/
         ]
         */
 
-        // Var olan tekli kriptoların listesini al BTC,ETH...
         JsonArray symbolsListJsonArray = JsonParser
                 .parseString(response("https://www.bitstamp.net/api/v2/trading-pairs-info/"))
                 .getAsJsonArray();

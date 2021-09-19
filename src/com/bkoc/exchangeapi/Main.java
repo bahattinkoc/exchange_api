@@ -137,6 +137,16 @@ public class Main {
         HashMap<String, BigDecimal> tickerBitstamp = Bitstamp.ticker24hr("BTCUSDT");
         System.out.println("LastPrice: " + tickerBitstamp.get("lastPrice") + "\nPrice Change: " + tickerBitstamp.get("priceChange") + "\nPercent: " + tickerBitstamp.get("priceChangePercent") + "\nVolume: " + tickerBitstamp.get("volume"));*/
 
-        //
+        //GEMINI
+        /*List<String> symbolsGemini = Gemini.getSymbols();
+        for (String i : symbolsGemini)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsGemini.size());
+        List<Candlestick> candlesticksGemini = Gemini.klines("btcusd", Interval.INT_30MIN);
+        List<BigDecimal> csGeminiList = Gemini.getValuesOfCandlestics(candlesticksGemini, General.OHLCV.CLOSE);
+        for (BigDecimal i : csGeminiList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerGemini = Gemini.ticker24hr("BTCUSD");
+        System.out.println("LastPrice: " + tickerGemini.get("lastPrice") + "\nPrice Change: " + tickerGemini.get("priceChange") + "\nPercent: " + tickerGemini.get("priceChangePercent") + "\nVolume: " + tickerGemini.get("volume"));*/
     }
 }
