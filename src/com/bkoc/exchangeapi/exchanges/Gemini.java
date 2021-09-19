@@ -38,22 +38,24 @@ public class Gemini extends General { // https://api.gemini.com
         /* GET /v2/candles/:symbol/:time_frame
         [
             [
-             1559755800000, time
-             7781.6,        open
-             7820.23,       high
-             7776.56,       low
-             7819.39,       close
-             34.7624802159  volume
+                1559755800000, time
+                7781.6,        open
+                7820.23,       high
+                7776.56,       low
+                7819.39,       close
+                34.7624802159  volume
             ],
-            [1559755800000,
-            7781.6,
-            7829.46,
-            7776.56,
-            7817.28,
-            43.4228281059],
+            [
+                1559755800000,
+                7781.6,
+                7829.46,
+                7776.56,
+                7817.28,
+                43.4228281059
+            ],
             ...
         ]
-        }*/
+        */
 
         JsonArray klinesAsJsonArray = JsonParser
                 .parseString(response("https://api.gemini.com/v2/candles/" + symbol.toLowerCase(Locale.ROOT) + "/1day"))
@@ -95,7 +97,7 @@ public class Gemini extends General { // https://api.gemini.com
             43.4228281059],
             ...
         ]
-        }*/
+        */
 
         String intervalResolution = (interval == Interval.INT_1HOUR) ? "1hr" : (interval == Interval.INT_6HOURS) ? "6hr"
                 : (interval == Interval.INT_1DAY) ? "1day" : interval.getValue();

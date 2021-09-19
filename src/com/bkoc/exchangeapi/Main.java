@@ -148,5 +148,17 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerGemini = Gemini.ticker24hr("BTCUSD");
         System.out.println("LastPrice: " + tickerGemini.get("lastPrice") + "\nPrice Change: " + tickerGemini.get("priceChange") + "\nPercent: " + tickerGemini.get("priceChangePercent") + "\nVolume: " + tickerGemini.get("volume"));*/
+
+        //BITTREX
+        /*List<String> symbolsBittrex = Bittrex.getSymbols();
+        for (String i : symbolsBittrex)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsBittrex.size());
+        List<Candlestick> closesBittrex = Bittrex.klines("BTC-USDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesBittrexList = Bittrex.getValuesOfCandlestics(closesBittrex, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesBittrexList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerBittrex = Bittrex.ticker24hr("BTC-USDT");
+        System.out.println("LastPrice: " + tickerBittrex.get("lastPrice") + "\nPrice Change: " + tickerBittrex.get("priceChange") + "\nPercent: " + tickerBittrex.get("priceChangePercent") + "\nVolume: " + tickerBittrex.get("volume"));*/
     }
 }
