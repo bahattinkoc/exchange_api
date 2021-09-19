@@ -160,5 +160,17 @@ public class Main {
             System.out.println(i.setScale(2, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerBittrex = Bittrex.ticker24hr("BTC-USDT");
         System.out.println("LastPrice: " + tickerBittrex.get("lastPrice") + "\nPrice Change: " + tickerBittrex.get("priceChange") + "\nPercent: " + tickerBittrex.get("priceChangePercent") + "\nVolume: " + tickerBittrex.get("volume"));*/
+
+        //BYBIT
+        /*List<String> symbolsByBit = ByBit.getSymbols();
+        for (String i : symbolsByBit)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsByBit.size());
+        List<Candlestick> closesByBit = ByBit.klines("BTCUSDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesByBitList = ByBit.getValuesOfCandlestics(closesByBit, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesByBitList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerByBit = ByBit.ticker24hr("BTCUSDT");
+        System.out.println("LastPrice: " + tickerByBit.get("lastPrice") + "\nPrice Change: " + tickerByBit.get("priceChange") + "\nPercent: " + tickerByBit.get("priceChangePercent") + "\nVolume: " + tickerByBit.get("volume"));*/
     }
 }
