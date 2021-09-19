@@ -196,5 +196,17 @@ public class Main {
             System.out.println(i.setScale(2, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerBtcTurk = BtcTurk.ticker24hr("BTC_USDT");
         System.out.println("LastPrice: " + tickerBtcTurk.get("lastPrice") + "\nPrice Change: " + tickerBtcTurk.get("priceChange") + "\nPercent: " + tickerBtcTurk.get("priceChangePercent") + "\nVolume: " + tickerBtcTurk.get("volume"));*/
+
+        //POLONIEX
+        /*List<String> symbolsPoloniex = Poloniex.getSymbols();
+        for (String i : symbolsPoloniex)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsPoloniex.size());
+        List<Candlestick> closesPoloniex = Poloniex.klines("USDT_BTC", Interval.INT_2HOURS);
+        List<BigDecimal> closesPoloniexList = Poloniex.getValuesOfCandlestics(closesPoloniex, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesPoloniexList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerPoloniex = Poloniex.ticker24hr("USDT_BTC");
+        System.out.println("LastPrice: " + tickerPoloniex.get("lastPrice") + "\nPrice Change: " + tickerPoloniex.get("priceChange") + "\nPercent: " + tickerPoloniex.get("priceChangePercent") + "\nVolume: " + tickerPoloniex.get("volume"));*/
     }
 }
