@@ -5,7 +5,6 @@ import com.bkoc.exchangeapi.General;
 import com.bkoc.exchangeapi.Interval;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;

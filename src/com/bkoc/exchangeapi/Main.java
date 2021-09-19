@@ -126,6 +126,17 @@ public class Main {
         System.out.println(symbolsBitfinex.get(20));
         System.out.println("LastPrice: " + tickerBitfinex.get("lastPrice") + "\nPrice Change: " + tickerBitfinex.get("priceChange") + "\nPercent: " + tickerBitfinex.get("priceChangePercent") + "\nVolume: " + tickerBitfinex.get("volume"));*/
 
+        //BITSTAMP
+        /*List<String> symbolsBitstamp = Bitstamp.getSymbols();
+        for (String i : symbolsBitstamp)
+            System.out.println(i);
+        List<Candlestick> candlesticksBitstamp = Bitstamp.klines("btcusdt", Interval.INT_30MIN);
+        List<BigDecimal> csBitstampList = Bitstamp.getValuesOfCandlestics(candlesticksBitstamp, General.OHLCV.CLOSE);
+        for (BigDecimal i : csBitstampList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerBitstamp = Bitstamp.ticker24hr("BTCUSDT");
+        System.out.println("LastPrice: " + tickerBitstamp.get("lastPrice") + "\nPrice Change: " + tickerBitstamp.get("priceChange") + "\nPercent: " + tickerBitstamp.get("priceChangePercent") + "\nVolume: " + tickerBitstamp.get("volume"));*/
+
         //
     }
 }
