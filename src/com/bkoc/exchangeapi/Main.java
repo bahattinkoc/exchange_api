@@ -232,5 +232,17 @@ public class Main {
             System.out.println(i.setScale(2, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerHitBTC = HitBTC.ticker24hr("BTCUSDT");
         System.out.println("LastPrice: " + tickerHitBTC.get("lastPrice") + "\nPrice Change: " + tickerHitBTC.get("priceChange") + "\nPercent: " + tickerHitBTC.get("priceChangePercent") + "\nVolume: " + tickerHitBTC.get("volume"));*/
+
+        //LIQUID
+        /*List<String> symbolsLiquid = Liquid.getSymbols();
+        for (String i : symbolsLiquid)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsLiquid.size());
+        List<Candlestick> closesLiquid = Liquid.klines("BTCUSDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesLiquidList = Liquid.getValuesOfCandlestics(closesLiquid, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesLiquidList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerLiquid = Liquid.ticker24hr("BTCUSDT");
+        System.out.println("LastPrice: " + tickerLiquid.get("lastPrice") + "\nPrice Change: " + tickerLiquid.get("priceChange") + "\nPercent: " + tickerLiquid.get("priceChangePercent") + "\nVolume: " + tickerLiquid.get("volume"));*/
     }
 }
