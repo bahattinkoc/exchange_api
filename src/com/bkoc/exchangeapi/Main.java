@@ -244,5 +244,17 @@ public class Main {
             System.out.println(i.setScale(2, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerLiquid = Liquid.ticker24hr("BTCUSDT");
         System.out.println("LastPrice: " + tickerLiquid.get("lastPrice") + "\nPrice Change: " + tickerLiquid.get("priceChange") + "\nPercent: " + tickerLiquid.get("priceChangePercent") + "\nVolume: " + tickerLiquid.get("volume"));*/
+
+        //UPBIT
+        /*List<String> symbolsUpbit = Upbit.getSymbols();
+        for (String i : symbolsUpbit)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsUpbit.size());
+        List<Candlestick> closesUpbit = Upbit.klines("USDT-BTC", Interval.INT_1HOUR);
+        List<BigDecimal> closesUpbitList = Upbit.getValuesOfCandlestics(closesUpbit, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesUpbitList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerUpbit = Upbit.ticker24hr("USDT-BTC");
+        System.out.println("LastPrice: " + tickerUpbit.get("lastPrice") + "\nPrice Change: " + tickerUpbit.get("priceChange") + "\nPercent: " + tickerUpbit.get("priceChangePercent") + "\nVolume: " + tickerUpbit.get("volume"));*/
     }
 }
