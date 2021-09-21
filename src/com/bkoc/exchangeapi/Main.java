@@ -5,6 +5,12 @@ import com.bkoc.exchangeapi.exchanges.*;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -256,5 +262,18 @@ public class Main {
             System.out.println(i.setScale(2, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerUpbit = Upbit.ticker24hr("USDT-BTC");
         System.out.println("LastPrice: " + tickerUpbit.get("lastPrice") + "\nPrice Change: " + tickerUpbit.get("priceChange") + "\nPercent: " + tickerUpbit.get("priceChangePercent") + "\nVolume: " + tickerUpbit.get("volume"));*/
+
+        //PROBIT
+        /*List<String> symbolsProbit = Probit.getSymbols();
+        for (String i : symbolsProbit)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsProbit.size());
+        List<Candlestick> closesProbit = Probit.klines("MONA-USDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesProbitList = Probit.getValuesOfCandlestics(closesProbit, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesProbitList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerProbit = Probit.ticker24hr("BTC-USDT");
+        System.out.println("LastPrice: " + tickerProbit.get("lastPrice") + "\nPrice Change: " + tickerProbit.get("priceChange") + "\nPercent: " + tickerProbit.get("priceChangePercent") + "\nVolume: " + tickerProbit.get("volume"));*/
+
     }
 }
