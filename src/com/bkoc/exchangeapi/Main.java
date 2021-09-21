@@ -210,15 +210,27 @@ public class Main {
         System.out.println("LastPrice: " + tickerPoloniex.get("lastPrice") + "\nPrice Change: " + tickerPoloniex.get("priceChange") + "\nPercent: " + tickerPoloniex.get("priceChangePercent") + "\nVolume: " + tickerPoloniex.get("volume"));*/
 
         //ASCENDEX
-//        List<String> symbolsAscendEX = AscendEX.getSymbols();
-//        for (String i : symbolsAscendEX)
-//            System.out.println(i);
-//        System.out.println("Size: " + symbolsAscendEX.size());
+        /*List<String> symbolsAscendEX = AscendEX.getSymbols();
+        for (String i : symbolsAscendEX)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsAscendEX.size());
         List<Candlestick> closesAscendEX = AscendEX.klines("BTC/USDT", Interval.INT_2HOURS);
         List<BigDecimal> closesAscendEXList = AscendEX.getValuesOfCandlestics(closesAscendEX, General.OHLCV.CLOSE);
         for (BigDecimal i : closesAscendEXList)
             System.out.println(i.setScale(2, RoundingMode.HALF_UP));
-//        HashMap<String, BigDecimal> tickerAscendEX = AscendEX.ticker24hr("BTC/USDT");
-//        System.out.println("LastPrice: " + tickerAscendEX.get("lastPrice") + "\nPrice Change: " + tickerAscendEX.get("priceChange") + "\nPercent: " + tickerAscendEX.get("priceChangePercent") + "\nVolume: " + tickerAscendEX.get("volume"));
+        HashMap<String, BigDecimal> tickerAscendEX = AscendEX.ticker24hr("BTC/USDT");
+        System.out.println("LastPrice: " + tickerAscendEX.get("lastPrice") + "\nPrice Change: " + tickerAscendEX.get("priceChange") + "\nPercent: " + tickerAscendEX.get("priceChangePercent") + "\nVolume: " + tickerAscendEX.get("volume"));*/
+
+        //HITBTC
+        /*List<String> symbolsHitBTC = HitBTC.getSymbols();
+        for (String i : symbolsHitBTC)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsHitBTC.size());
+        List<Candlestick> closesHitBTC = HitBTC.klines("BTCUSDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesHitBTCList = HitBTC.getValuesOfCandlestics(closesHitBTC, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesHitBTCList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerHitBTC = HitBTC.ticker24hr("BTCUSDT");
+        System.out.println("LastPrice: " + tickerHitBTC.get("lastPrice") + "\nPrice Change: " + tickerHitBTC.get("priceChange") + "\nPercent: " + tickerHitBTC.get("priceChangePercent") + "\nVolume: " + tickerHitBTC.get("volume"));*/
     }
 }
