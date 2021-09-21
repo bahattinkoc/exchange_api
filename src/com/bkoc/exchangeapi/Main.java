@@ -208,5 +208,17 @@ public class Main {
             System.out.println(i.setScale(2, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerPoloniex = Poloniex.ticker24hr("USDT_BTC");
         System.out.println("LastPrice: " + tickerPoloniex.get("lastPrice") + "\nPrice Change: " + tickerPoloniex.get("priceChange") + "\nPercent: " + tickerPoloniex.get("priceChangePercent") + "\nVolume: " + tickerPoloniex.get("volume"));*/
+
+        //ASCENDEX
+//        List<String> symbolsAscendEX = AscendEX.getSymbols();
+//        for (String i : symbolsAscendEX)
+//            System.out.println(i);
+//        System.out.println("Size: " + symbolsAscendEX.size());
+        List<Candlestick> closesAscendEX = AscendEX.klines("BTC/USDT", Interval.INT_2HOURS);
+        List<BigDecimal> closesAscendEXList = AscendEX.getValuesOfCandlestics(closesAscendEX, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesAscendEXList)
+            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
+//        HashMap<String, BigDecimal> tickerAscendEX = AscendEX.ticker24hr("BTC/USDT");
+//        System.out.println("LastPrice: " + tickerAscendEX.get("lastPrice") + "\nPrice Change: " + tickerAscendEX.get("priceChange") + "\nPercent: " + tickerAscendEX.get("priceChangePercent") + "\nVolume: " + tickerAscendEX.get("volume"));
     }
 }
