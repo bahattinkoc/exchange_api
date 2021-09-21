@@ -275,5 +275,16 @@ public class Main {
         HashMap<String, BigDecimal> tickerProbit = Probit.ticker24hr("BTC-USDT");
         System.out.println("LastPrice: " + tickerProbit.get("lastPrice") + "\nPrice Change: " + tickerProbit.get("priceChange") + "\nPercent: " + tickerProbit.get("priceChangePercent") + "\nVolume: " + tickerProbit.get("volume"));*/
 
+        //CURRENCYCOM
+        /*List<String> symbolsCurrencycom = Currencycom.getSymbols();
+        for (String i : symbolsCurrencycom)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsCurrencycom.size());
+        List<Candlestick> closesCurrencycom = Currencycom.klines("ETH/USD", Interval.INT_1HOUR);
+        List<BigDecimal> closesCurrencycomList = Currencycom.getValuesOfCandlestics(closesCurrencycom, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesCurrencycomList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerCurrencycom = Currencycom.ticker24hr("BTC/USDT");
+        System.out.println("LastPrice: " + tickerCurrencycom.get("lastPrice") + "\nPrice Change: " + tickerCurrencycom.get("priceChange") + "\nPercent: " + tickerCurrencycom.get("priceChangePercent") + "\nVolume: " + tickerCurrencycom.get("volume"));*/
     }
 }

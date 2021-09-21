@@ -111,6 +111,7 @@ public class HitBTC extends General { // https://api.hitbtc.com/api/3/public
         }
         */
 
+        //Bunların hepsini yapabiliyor
         String intervalResolution = (interval == Interval.INT_1MIN) ? "M1" : (interval == Interval.INT_3MIN) ? "M3" : (interval == Interval.INT_5MIN) ? "M5"
                 : (interval == Interval.INT_15MIN) ? "M15" : (interval == Interval.INT_30MIN) ? "M30" : (interval == Interval.INT_1HOUR) ? "H1"
                 : (interval == Interval.INT_4HOURS) ? "H4" : (interval == Interval.INT_1DAY) ? "D1" : (interval == Interval.INT_1WEEK) ? "D7" : "1M";

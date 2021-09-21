@@ -107,6 +107,7 @@ public class Upbit extends General { // https://api.upbit.com/v1/
         ]
         */
 
+        //Bunların hepsini yapabiliyor
         String intervalResolution = (interval == Interval.INT_1MIN) ? "minutes/1" : (interval == Interval.INT_3MIN) ? "minutes/3"
                 : (interval == Interval.INT_5MIN) ? "minutes/5" : (interval == Interval.INT_15MIN) ? "minutes/15"
                 : (interval == Interval.INT_30MIN) ? "minutes/30" : (interval == Interval.INT_1HOUR) ? "minutes/60"

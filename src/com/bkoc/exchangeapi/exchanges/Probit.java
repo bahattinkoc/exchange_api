@@ -120,6 +120,7 @@ public class Probit extends General { // https://api.probit.com/api/exchange/v1/
         }
         */
 
+        //Bunların hepsini yapabiliyor
         String intervalResolution = (interval == Interval.INT_1MIN) ? "1m" : (interval == Interval.INT_3MIN) ? "3m"
                 : (interval == Interval.INT_5MIN) ? "5m" : (interval == Interval.INT_15MIN) ? "15m"
                 : (interval == Interval.INT_30MIN) ? "30m" : (interval == Interval.INT_1HOUR) ? "1h"
