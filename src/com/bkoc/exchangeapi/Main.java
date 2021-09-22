@@ -298,5 +298,17 @@ public class Main {
             System.out.println(i.setScale(3, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerBitMEX = BitMEX.ticker24hr("XBTEURU21");
         System.out.println("LastPrice: " + tickerBitMEX.get("lastPrice") + "\nPrice Change: " + tickerBitMEX.get("priceChange") + "\nPercent: " + tickerBitMEX.get("priceChangePercent") + "\nVolume: " + tickerBitMEX.get("volume"));*/
+
+        //BITBAY
+        /*List<String> symbolsBitBay = BitBay.getSymbols();
+        for (String i : symbolsBitBay)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsBitBay.size());
+        List<Candlestick> closesBitBay = BitBay.klines("BTC-USDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesBitBayList = BitBay.getValuesOfCandlestics(closesBitBay, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesBitBayList)
+            System.out.println(i.setScale(3, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerBitBay = BitBay.ticker24hr("BTC-USDT");
+        System.out.println("LastPrice: " + tickerBitBay.get("lastPrice") + "\nPrice Change: " + tickerBitBay.get("priceChange") + "\nPercent: " + tickerBitBay.get("priceChangePercent") + "\nVolume: " + tickerBitBay.get("volume"));*/
     }
 }
