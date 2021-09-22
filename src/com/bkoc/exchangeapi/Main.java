@@ -286,5 +286,17 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerCurrencycom = Currencycom.ticker24hr("BTC/USDT");
         System.out.println("LastPrice: " + tickerCurrencycom.get("lastPrice") + "\nPrice Change: " + tickerCurrencycom.get("priceChange") + "\nPercent: " + tickerCurrencycom.get("priceChangePercent") + "\nVolume: " + tickerCurrencycom.get("volume"));*/
+
+        //BITMEX
+        /*List<String> symbolsBitMEX = BitMEX.getSymbols();
+        for (String i : symbolsBitMEX)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsBitMEX.size());
+        List<Candlestick> closesBitMEX = BitMEX.klines("XBTUSD", Interval.INT_1HOUR);
+        List<BigDecimal> closesBitMEXList = BitMEX.getValuesOfCandlestics(closesBitMEX, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesBitMEXList)
+            System.out.println(i.setScale(3, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerBitMEX = BitMEX.ticker24hr("XBTEURU21");
+        System.out.println("LastPrice: " + tickerBitMEX.get("lastPrice") + "\nPrice Change: " + tickerBitMEX.get("priceChange") + "\nPercent: " + tickerBitMEX.get("priceChangePercent") + "\nVolume: " + tickerBitMEX.get("volume"));*/
     }
 }
