@@ -415,5 +415,17 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerBitpanda = Bitpanda.ticker24hr("BTC_EUR");
         System.out.println("LastPrice: " + tickerBitpanda.get("lastPrice") + "\nPrice Change: " + tickerBitpanda.get("priceChange") + "\nPercent: " + tickerBitpanda.get("priceChangePercent") + "\nVolume: " + tickerBitpanda.get("volume"));*/
+
+        //MEXC
+        /*List<String> symbolsMEXC = MEXC.getSymbols();
+        for (String i : symbolsMEXC)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsMEXC.size());
+        List<Candlestick> closesMEXC = MEXC.klines("BTC_USDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesMEXCList = MEXC.getValuesOfCandlestics(closesMEXC, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesMEXCList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerMEXC = MEXC.ticker24hr("BTC_USDT");
+        System.out.println("LastPrice: " + tickerMEXC.get("lastPrice") + "\nPrice Change: " + tickerMEXC.get("priceChange") + "\nPercent: " + tickerMEXC.get("priceChangePercent") + "\nVolume: " + tickerMEXC.get("volume"));*/
     }
 }
