@@ -395,5 +395,10 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerWhiteBit = WhiteBit.ticker24hr("BTC_USDT");
         System.out.println("LastPrice: " + tickerWhiteBit.get("lastPrice") + "\nPrice Change: " + tickerWhiteBit.get("priceChange") + "\nPercent: " + tickerWhiteBit.get("priceChangePercent") + "\nVolume: " + tickerWhiteBit.get("volume"));*/
+
+        //FAG FEAR & GREED
+        List<Integer> fagList = FAG.getFAG();
+        for (int i : fagList)
+            System.out.println(i);
     }
 }
