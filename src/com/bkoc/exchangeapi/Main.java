@@ -358,5 +358,17 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerNovaDAX = NovaDAX.ticker24hr("BTC_USDT");
         System.out.println("LastPrice: " + tickerNovaDAX.get("lastPrice") + "\nPrice Change: " + tickerNovaDAX.get("priceChange") + "\nPercent: " + tickerNovaDAX.get("priceChangePercent") + "\nVolume: " + tickerNovaDAX.get("volume"));*/
+
+        //TEROCK
+        /*List<String> symbolsTheRock = TheRock.getSymbols();
+        for (String i : symbolsTheRock)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsTheRock.size());
+        List<Candlestick> closesTheRock = TheRock.klines("BTCUSDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesTheRockList = TheRock.getValuesOfCandlestics(closesTheRock, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesTheRockList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerTheRock = TheRock.ticker24hr("BTCUSDT");
+        System.out.println("LastPrice: " + tickerTheRock.get("lastPrice") + "\nPrice Change: " + tickerTheRock.get("priceChange") + "\nPercent: " + tickerTheRock.get("priceChangePercent") + "\nVolume: " + tickerTheRock.get("volume"));*/
     }
 }
