@@ -310,5 +310,17 @@ public class Main {
             System.out.println(i.setScale(3, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerBitBay = BitBay.ticker24hr("BTC-USDT");
         System.out.println("LastPrice: " + tickerBitBay.get("lastPrice") + "\nPrice Change: " + tickerBitBay.get("priceChange") + "\nPercent: " + tickerBitBay.get("priceChangePercent") + "\nVolume: " + tickerBitBay.get("volume"));*/
+
+        //CHANGELLYPRO
+        /*List<String> symbolsChangellyPro = ChangellyPro.getSymbols();
+        for (String i : symbolsChangellyPro)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsChangellyPro.size());
+        List<Candlestick> closesChangellyPro = ChangellyPro.klines("BTCUSDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesChangellyProList = ChangellyPro.getValuesOfCandlestics(closesChangellyPro, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesChangellyProList)
+            System.out.println(i.setScale(3, RoundingMode.HALF_UP));
+        HashMap<String, BigDecimal> tickerChangellyPro = ChangellyPro.ticker24hr("BTCUSDT");
+        System.out.println("LastPrice: " + tickerChangellyPro.get("lastPrice") + "\nPrice Change: " + tickerChangellyPro.get("priceChange") + "\nPercent: " + tickerChangellyPro.get("priceChangePercent") + "\nVolume: " + tickerChangellyPro.get("volume"));*/
     }
 }
