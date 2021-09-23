@@ -5,6 +5,7 @@ import com.bkoc.exchangeapi.exchanges.*;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -359,7 +360,7 @@ public class Main {
         HashMap<String, BigDecimal> tickerNovaDAX = NovaDAX.ticker24hr("BTC_USDT");
         System.out.println("LastPrice: " + tickerNovaDAX.get("lastPrice") + "\nPrice Change: " + tickerNovaDAX.get("priceChange") + "\nPercent: " + tickerNovaDAX.get("priceChangePercent") + "\nVolume: " + tickerNovaDAX.get("volume"));*/
 
-        //TEROCK
+        //THEROCK
         /*List<String> symbolsTheRock = TheRock.getSymbols();
         for (String i : symbolsTheRock)
             System.out.println(i);
@@ -370,5 +371,17 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerTheRock = TheRock.ticker24hr("BTCUSDT");
         System.out.println("LastPrice: " + tickerTheRock.get("lastPrice") + "\nPrice Change: " + tickerTheRock.get("priceChange") + "\nPercent: " + tickerTheRock.get("priceChangePercent") + "\nVolume: " + tickerTheRock.get("volume"));*/
+
+        //TIMEX
+        /*List<String> symbolsTimeX = TimeX.getSymbols();
+        for (String i : symbolsTimeX)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsTimeX.size());
+        List<Candlestick> closesTimeX = TimeX.klines("BTCUSDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesTimeXList = TimeX.getValuesOfCandlestics(closesTimeX, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesTimeXList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerTimeX = TimeX.ticker24hr("LTCAUDT");
+        System.out.println("LastPrice: " + tickerTimeX.get("lastPrice") + "\nPrice Change: " + tickerTimeX.get("priceChange") + "\nPercent: " + tickerTimeX.get("priceChangePercent") + "\nVolume: " + tickerTimeX.get("volume"));*/
     }
 }
