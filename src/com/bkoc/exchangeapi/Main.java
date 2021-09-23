@@ -17,6 +17,14 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        //FAG FEAR & GREED
+        /*List<Integer> fagList = FAG.getFAG(); // İlk eleman bugüne ait
+        for (int i : fagList)
+            System.out.println(i);*/
+
+        //https://api.coingecko.com/api/v3/global
+        //https://syncwith.com/api/coinpaprika/get/v1-global
+
         //FTX
         /*
         List<Candlestick> candlestickListFTX = FTX.klines("BTC-PERP", Interval.INT_1DAY);
@@ -396,9 +404,16 @@ public class Main {
         HashMap<String, BigDecimal> tickerWhiteBit = WhiteBit.ticker24hr("BTC_USDT");
         System.out.println("LastPrice: " + tickerWhiteBit.get("lastPrice") + "\nPrice Change: " + tickerWhiteBit.get("priceChange") + "\nPercent: " + tickerWhiteBit.get("priceChangePercent") + "\nVolume: " + tickerWhiteBit.get("volume"));*/
 
-        //FAG FEAR & GREED
-        List<Integer> fagList = FAG.getFAG();
-        for (int i : fagList)
+        //BITPANDA
+        /*List<String> symbolsBitpanda = Bitpanda.getSymbols();
+        for (String i : symbolsBitpanda)
             System.out.println(i);
+        System.out.println("Size: " + symbolsBitpanda.size());
+        List<Candlestick> closesBitpanda = Bitpanda.klines("BTC_EUR", Interval.INT_1HOUR);
+        List<BigDecimal> closesBitpandaList = Bitpanda.getValuesOfCandlestics(closesBitpanda, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesBitpandaList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerBitpanda = Bitpanda.ticker24hr("BTC_EUR");
+        System.out.println("LastPrice: " + tickerBitpanda.get("lastPrice") + "\nPrice Change: " + tickerBitpanda.get("priceChange") + "\nPercent: " + tickerBitpanda.get("priceChangePercent") + "\nVolume: " + tickerBitpanda.get("volume"));*/
     }
 }
