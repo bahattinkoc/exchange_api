@@ -334,5 +334,17 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerCoinDCX = CoinDCX.ticker24hr("I-FIL_INR");
         System.out.println("LastPrice: " + tickerCoinDCX.get("lastPrice") + "\nPrice Change: " + tickerCoinDCX.get("priceChange") + "\nPercent: " + tickerCoinDCX.get("priceChangePercent") + "\nVolume: " + tickerCoinDCX.get("volume"));*/
+
+        //EXMO
+        /*List<String> symbolsExmo = Exmo.getSymbols();
+        for (String i : symbolsExmo)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsExmo.size());
+        List<Candlestick> closesExmo = Exmo.klines("BTC_USD", Interval.INT_1HOUR);
+        List<BigDecimal> closesExmoList = Exmo.getValuesOfCandlestics(closesExmo, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesExmoList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerExmo = Exmo.ticker24hr("BTC_USD");
+        System.out.println("LastPrice: " + tickerExmo.get("lastPrice") + "\nPrice Change: " + tickerExmo.get("priceChange") + "\nPercent: " + tickerExmo.get("priceChangePercent") + "\nVolume: " + tickerExmo.get("volume"));*/
     }
 }
