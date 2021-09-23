@@ -346,5 +346,17 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerExmo = Exmo.ticker24hr("BTC_USD");
         System.out.println("LastPrice: " + tickerExmo.get("lastPrice") + "\nPrice Change: " + tickerExmo.get("priceChange") + "\nPercent: " + tickerExmo.get("priceChangePercent") + "\nVolume: " + tickerExmo.get("volume"));*/
+
+        //NOVADAX
+        /*List<String> symbolsNovaDAX = NovaDAX.getSymbols();
+        for (String i : symbolsNovaDAX)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsNovaDAX.size());
+        List<Candlestick> closesNovaDAX = NovaDAX.klines("BTC_USDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesNovaDAXList = NovaDAX.getValuesOfCandlestics(closesNovaDAX, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesNovaDAXList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerNovaDAX = NovaDAX.ticker24hr("BTC_USDT");
+        System.out.println("LastPrice: " + tickerNovaDAX.get("lastPrice") + "\nPrice Change: " + tickerNovaDAX.get("priceChange") + "\nPercent: " + tickerNovaDAX.get("priceChangePercent") + "\nVolume: " + tickerNovaDAX.get("volume"));*/
     }
 }
