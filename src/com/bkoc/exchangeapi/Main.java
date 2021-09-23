@@ -383,5 +383,17 @@ public class Main {
             System.out.println(i);
         HashMap<String, BigDecimal> tickerTimeX = TimeX.ticker24hr("LTCAUDT");
         System.out.println("LastPrice: " + tickerTimeX.get("lastPrice") + "\nPrice Change: " + tickerTimeX.get("priceChange") + "\nPercent: " + tickerTimeX.get("priceChangePercent") + "\nVolume: " + tickerTimeX.get("volume"));*/
+
+        //WHITEBIT
+        /*List<String> symbolsWhiteBit = WhiteBit.getSymbols();
+        for (String i : symbolsWhiteBit)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsWhiteBit.size());
+        List<Candlestick> closesWhiteBit = WhiteBit.klines("BTC_USDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesWhiteBitList = WhiteBit.getValuesOfCandlestics(closesWhiteBit, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesWhiteBitList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerWhiteBit = WhiteBit.ticker24hr("BTC_USDT");
+        System.out.println("LastPrice: " + tickerWhiteBit.get("lastPrice") + "\nPrice Change: " + tickerWhiteBit.get("priceChange") + "\nPercent: " + tickerWhiteBit.get("priceChangePercent") + "\nVolume: " + tickerWhiteBit.get("volume"));*/
     }
 }
