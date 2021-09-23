@@ -322,5 +322,17 @@ public class Main {
             System.out.println(i.setScale(3, RoundingMode.HALF_UP));
         HashMap<String, BigDecimal> tickerChangellyPro = ChangellyPro.ticker24hr("BTCUSDT");
         System.out.println("LastPrice: " + tickerChangellyPro.get("lastPrice") + "\nPrice Change: " + tickerChangellyPro.get("priceChange") + "\nPercent: " + tickerChangellyPro.get("priceChangePercent") + "\nVolume: " + tickerChangellyPro.get("volume"));*/
+
+        //COINDCX
+        /*List<String> symbolsCoinDCX = CoinDCX.getSymbols();
+        for (String i : symbolsCoinDCX)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsCoinDCX.size());
+        List<Candlestick> closesCoinDCX = CoinDCX.klines("B-BTC_USDT", Interval.INT_1HOUR);
+        List<BigDecimal> closesCoinDCXList = CoinDCX.getValuesOfCandlestics(closesCoinDCX, General.OHLCV.CLOSE);
+        for (BigDecimal i : closesCoinDCXList)
+            System.out.println(i);
+        HashMap<String, BigDecimal> tickerCoinDCX = CoinDCX.ticker24hr("I-FIL_INR");
+        System.out.println("LastPrice: " + tickerCoinDCX.get("lastPrice") + "\nPrice Change: " + tickerCoinDCX.get("priceChange") + "\nPercent: " + tickerCoinDCX.get("priceChangePercent") + "\nVolume: " + tickerCoinDCX.get("volume"));*/
     }
 }
