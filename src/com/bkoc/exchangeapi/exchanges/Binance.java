@@ -25,7 +25,7 @@ public class Binance extends General { //https://www.binance.com/api/
         BNB
     }
 
-    public static List<String> getSymbols(Parite parite, Permissions permissions) throws IOException {
+    public static List<String> getSymbols() throws IOException {
         /*{
               "timezone": "UTC",
               "serverTime": 1565246363776,
@@ -82,12 +82,14 @@ public class Binance extends General { //https://www.binance.com/api/
         List<String> list = new LinkedList<>();
         for (JsonElement e : symbolsList) {
             JsonObject obj = e.getAsJsonObject();
-            JsonArray permissionsList = obj.getAsJsonArray("permissions");
-            for (JsonElement i : permissionsList)
-                if (i.getAsString().equals(permissions.toString()) && obj.get("quoteAsset").getAsString().equals(parite.toString()) && obj.get("status").getAsString().equals("TRADING")) {
-                    list.add(obj.get("symbol").getAsString());
-                    break;
-                }
+            if (obj.get("status").getAsString().equals("TRADING"))
+                list.add(obj.get("symbol").getAsString());
+//            JsonArray permissionsList = obj.getAsJsonArray("permissions");
+//            for (JsonElement i : permissionsList)
+//                if (i.getAsString().equals(permissions.toString()) && obj.get("quoteAsset").getAsString().equals(parite.toString()) && obj.get("status").getAsString().equals("TRADING")) {
+//                    list.add(obj.get("symbol").getAsString());
+//                    break;
+//                }
         }
         return list;
     }
@@ -129,7 +131,7 @@ public class Binance extends General { //https://www.binance.com/api/
         return ticker;
     }
 
-    public static List<Candlestick> klines(String symbol, Interval interval, int limit) throws Exception {
+    public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
         /*[
               [
                 1499040000000,      // Open time
@@ -148,7 +150,7 @@ public class Binance extends General { //https://www.binance.com/api/
         ]*/
 
         JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://www.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval.getValue() + "&limit=" + limit))
+                .parseString(response("https://www.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval.getValue() + "&limit=300"))
                 .getAsJsonArray();
 
         List<Candlestick> list = new LinkedList<>();

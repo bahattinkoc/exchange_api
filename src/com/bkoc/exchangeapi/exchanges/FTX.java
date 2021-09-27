@@ -24,7 +24,7 @@ public class FTX extends General { //https://ftx.com/api/
         future
     }
 
-    public static List<String> getSymbols(Permissions permission) throws IOException {
+    public static List<String> getSymbols() throws IOException {
         /*  GET /markets
         {
           "success": true,
@@ -62,8 +62,7 @@ public class FTX extends General { //https://ftx.com/api/
         List<String> list = new LinkedList<>();
         for (JsonElement x : symbolsList){
             JsonObject object = x.getAsJsonObject();
-            if (object.get("type").getAsString().equals(permission.toString()))
-                list.add(object.get("name").getAsString());
+            list.add(object.get("name").getAsString());
         }
 
         return list;

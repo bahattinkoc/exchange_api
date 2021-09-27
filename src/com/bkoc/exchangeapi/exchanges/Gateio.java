@@ -20,7 +20,7 @@ public class Gateio extends General { //https://api.gateio.ws/api/v4/
         MARGIN
     }
 
-    public static List<String> getSymbols(Permissions permission) throws IOException {
+    public static List<String> getSymbols() throws IOException {
         /* GET /spot/currency_pairs
         [
           {
@@ -52,14 +52,8 @@ public class Gateio extends General { //https://api.gateio.ws/api/v4/
         ]*/
 
         List<String> list = new LinkedList<>();
-        JsonArray symbolsList;
-
-        if (permission == Permissions.SPOT)
-            symbolsList = JsonParser
+        JsonArray symbolsList = JsonParser
                 .parseString(response("https://api.gateio.ws/api/v4/spot/currency_pairs"))
-                .getAsJsonArray();
-        else symbolsList = JsonParser
-                .parseString(response("https://api.gateio.ws/api/v4/margin/currency_pairs"))
                 .getAsJsonArray();
 
         for (JsonElement i : symbolsList)
