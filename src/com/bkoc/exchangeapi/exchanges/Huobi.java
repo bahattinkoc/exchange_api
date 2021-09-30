@@ -151,6 +151,7 @@ public class Huobi extends General { // https://api.huobi.pro/
         }
         */
 
+        //1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1week, 1mon, 1year
         String intervalStr = (interval == Interval.INT_1MIN) ? "1min" : (interval == Interval.INT_5MIN) ? "5min" : (interval == Interval.INT_15MIN) ? "15min"
                 : (interval == Interval.INT_30MIN) ? "30min" : (interval == Interval.INT_1HOUR) ? "60min" : (interval == Interval.INT_4HOURS) ? "4hour"
                 : (interval == Interval.INT_1DAY) ? "1day" : "1week";

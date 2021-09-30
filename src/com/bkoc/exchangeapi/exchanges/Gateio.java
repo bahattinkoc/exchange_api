@@ -109,6 +109,7 @@ public class Gateio extends General { //https://api.gateio.ws/api/v4/
           ]
         ]*/
 
+        //10s, 1m, 5m, 15m, 30m, 1h, 4h, 8h, 1d, 7d
         String intervalStr = (interval.getValue().equals("1w")) ? "7d" : interval.getValue();
         JsonArray klinesAsJsonArray = JsonParser
                 .parseString(response("https://api.gateio.ws/api/v4/spot/candlesticks?currency_pair=" + symbol + "&limit=" + limit + "&interval=" + intervalStr))

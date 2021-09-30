@@ -99,6 +99,7 @@ public class Gemini extends General { // https://api.gemini.com
         ]
         */
 
+        //1m, 5m, 15m, 30m, 1hr, 6hr, 1day
         String intervalResolution = (interval == Interval.INT_1HOUR) ? "1hr" : (interval == Interval.INT_6HOURS) ? "6hr"
                 : (interval == Interval.INT_1DAY) ? "1day" : interval.getValue();
 

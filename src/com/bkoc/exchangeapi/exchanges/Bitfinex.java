@@ -82,6 +82,7 @@ public class Bitfinex extends General { // https://api-pub.bitfinex.com/v2/
         ]
         */
 
+        //1m, 5m, 15m, 30m, 1h, 3h, 4h, 6h, 12h, 1D, 7D, 14D, 1M
         String intervalStr = (interval == Interval.INT_1DAY) ? "1D" : (interval == Interval.INT_1WEEK) ? "7D" : interval.getValue();
 
         JsonArray klinesJson = JsonParser

@@ -127,6 +127,7 @@ public class AscendEX extends General { // https://ascendex.com/api/pro/v1/
         }
         */
 
+        //Sadece bunları yapabiliyor
         String intervalResolution = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5"
                 : (interval == Interval.INT_15MIN) ? "15" : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60"
                 : (interval == Interval.INT_2HOURS) ? "120" : (interval == Interval.INT_4HOURS) ? "240" : (interval == Interval.INT_6HOURS) ? "360"

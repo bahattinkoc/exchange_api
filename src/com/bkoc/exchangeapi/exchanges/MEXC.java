@@ -105,7 +105,7 @@ public class MEXC extends General { // https://www.mexc.com/open/api/v2/market/
         }
         */
 
-        //1m, 5m, 15m, 30m, 60m. of hour: 1h, of day: 1d, of month: 1M
+        //1m, 5m, 15m, 30m, 60m. of hour: 4h, of day: 1d, of month: 1M
         String intervalPeriod = (interval == Interval.INT_1MIN) ? "1m"
                 : (interval == Interval.INT_5MIN) ? "5m" : (interval == Interval.INT_15MIN) ? "15m"
                 : (interval == Interval.INT_30MIN) ? "30m" : (interval == Interval.INT_1HOUR) ? "60m"

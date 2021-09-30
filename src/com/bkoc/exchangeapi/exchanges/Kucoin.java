@@ -129,9 +129,12 @@ public class Kucoin extends General { // https://api.kucoin.com
             ]
         ]
         */
-        String intervalStr = (interval == Interval.INT_1MIN) ? "1min" : (interval == Interval.INT_5MIN) ? "5min" : (interval == Interval.INT_15MIN) ? "15min"
-                : (interval == Interval.INT_30MIN) ? "30min" : (interval == Interval.INT_1HOUR) ? "1hour" : (interval == Interval.INT_4HOURS) ? "4hour"
-                : (interval == Interval.INT_1DAY) ? "1day" : "1week";
+
+        //1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 8hour, 12hour, 1day, 1week
+        String intervalStr = (interval == Interval.INT_1MIN) ? "1min" : (interval == Interval.INT_3MIN) ? "3min" : (interval == Interval.INT_5MIN) ? "5min"
+                : (interval == Interval.INT_15MIN) ? "15min" : (interval == Interval.INT_30MIN) ? "30min" : (interval == Interval.INT_1HOUR) ? "1hour"
+                : (interval == Interval.INT_2HOURS) ? "2hour" : (interval == Interval.INT_4HOURS) ? "4hour" : (interval == Interval.INT_6HOURS) ? "6hour"
+                : (interval == Interval.INT_8HOURS) ? "8hour" : (interval == Interval.INT_12HOURS) ? "12hour"  : (interval == Interval.INT_1DAY) ? "1day" : "1week";
 
         JsonArray klinesAsJsonArray = JsonParser
                 .parseString(response("https://api.kucoin.com/api/v1/market/candles?symbol=" + symbol + "&type=" + intervalStr))

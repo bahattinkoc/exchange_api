@@ -58,6 +58,7 @@ public class Cryptocom extends General { // https://api.crypto.com/v2/
 
         return symbolsList;
     }
+
     public static HashMap<String, BigDecimal> ticker24hr(String symbol) throws IOException {
         /* GET /get-candlestick?instrument_name=BTC_USDT&timeframe=5m
         {
@@ -96,6 +97,7 @@ public class Cryptocom extends General { // https://api.crypto.com/v2/
 
         return ticker;
     }
+
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
         /* GET /get-candlestick?instrument_name=BTC_USDT&timeframe=5m
         {
@@ -114,6 +116,7 @@ public class Cryptocom extends General { // https://api.crypto.com/v2/
         }
         */
 
+        //1m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 1D, 7D, 14D, 1M
         String intervalResolution = (interval == Interval.INT_1DAY) ? "1D" : (interval == Interval.INT_1WEEK) ? "7D" : interval.getValue();
 
         JsonArray klinesJson = JsonParser

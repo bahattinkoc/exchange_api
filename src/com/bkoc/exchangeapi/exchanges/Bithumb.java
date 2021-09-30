@@ -127,6 +127,8 @@ public class Bithumb extends General { // https://api.bithumb.com
             }
         }
         */
+
+        //1m, 3m, 5m, 10m, 30m, 1h, 6h, 12h, 24h
         String intervalStr = (interval == Interval.INT_1DAY) ? "24h" : interval.getValue();
 
         JsonArray klinesJson = JsonParser

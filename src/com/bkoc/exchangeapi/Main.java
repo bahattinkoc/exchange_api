@@ -382,16 +382,16 @@ public class Main {
         System.out.println("LastPrice: " + tickerTheRock.get("lastPrice") + "\nPrice Change: " + tickerTheRock.get("priceChange") + "\nPercent: " + tickerTheRock.get("priceChangePercent") + "\nVolume: " + tickerTheRock.get("volume"));*/
 
         //TIMEX
-        /*List<String> symbolsTimeX = TimeX.getSymbols();
-        for (String i : symbolsTimeX)
-            System.out.println(i);
-        System.out.println("Size: " + symbolsTimeX.size());
+//        List<String> symbolsTimeX = TimeX.getSymbols();
+//        for (String i : symbolsTimeX)
+//            System.out.println(i);
+//        System.out.println("Size: " + symbolsTimeX.size());
         List<Candlestick> closesTimeX = TimeX.klines("BTCUSDT", Interval.INT_1HOUR);
         List<BigDecimal> closesTimeXList = TimeX.getValuesOfCandlestics(closesTimeX, General.OHLCV.CLOSE);
         for (BigDecimal i : closesTimeXList)
             System.out.println(i);
-        HashMap<String, BigDecimal> tickerTimeX = TimeX.ticker24hr("LTCAUDT");
-        System.out.println("LastPrice: " + tickerTimeX.get("lastPrice") + "\nPrice Change: " + tickerTimeX.get("priceChange") + "\nPercent: " + tickerTimeX.get("priceChangePercent") + "\nVolume: " + tickerTimeX.get("volume"));*/
+//        HashMap<String, BigDecimal> tickerTimeX = TimeX.ticker24hr("LTCAUDT");
+//        System.out.println("LastPrice: " + tickerTimeX.get("lastPrice") + "\nPrice Change: " + tickerTimeX.get("priceChange") + "\nPercent: " + tickerTimeX.get("priceChangePercent") + "\nVolume: " + tickerTimeX.get("volume"));
 
         //WHITEBIT
         /*List<String> symbolsWhiteBit = WhiteBit.getSymbols();

@@ -47,6 +47,7 @@ public class Poloniex extends General { // https://poloniex.com/public
 
         return symbolsList;
     }
+
     public static HashMap<String, BigDecimal> ticker24hr(String symbol) throws IOException {
         /* GET ?command=returnTicker
         {
@@ -84,6 +85,7 @@ public class Poloniex extends General { // https://poloniex.com/public
 
         return ticker;
     }
+
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
         /* GET ?command=returnChartData&currencyPair=BTC_XMR&period=14400
         [
@@ -113,7 +115,7 @@ public class Poloniex extends General { // https://poloniex.com/public
 
         //300, 900, 1800, 7200, 14400, and 86400 saniye
         int intervalResolution = (interval == Interval.INT_5MIN) ? 300 : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800
-                : (interval == Interval.INT_1HOUR) ? 3600 : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : 86400;
+                : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : 86400;
 
         long start = (System.currentTimeMillis() / 1000L) - (300 * intervalResolution);
 

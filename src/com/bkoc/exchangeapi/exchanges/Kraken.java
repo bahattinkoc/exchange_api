@@ -139,85 +139,7 @@ public class Kraken extends General { // https://api.kraken.com/0/public/
 
         return list;
     }
-    public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
-        /* GET /OHLC
-        {
-            "error": [ ],
-            "result": {
-            "XXBTZUSD": [
-            [
-                1616662740,
-                "52591.9",
-                "52599.9",
-                "52591.8",
-                "52599.9",
-                "52599.1",
-                "0.11091626",
-                5
-            ],
-            [
-                1616662800,
-                "52600.0",
-                "52674.9",
-                "52599.9",
-                "52665.2",
-                "52643.3",
-                "2.49035996",
-                30
-            ],
-            [
-                1616662860,
-                "52677.7",
-                "52686.4",
-                "52602.1",
-                "52609.5",
-                "52634.5",
-                "1.25810675",
-                20
-            ],
-            [
-                1616662920,
-                "52603.9",
-                "52627.5",
-                "52601.2",
-                "52616.4",
-                "52614.0",
-                "3.42391799",
-                23
-            ],
-            [
-                1616662980,
-                "52601.2",
-                "52601.2",
-                "52599.9",
-                "52599.9",
-                "52599.9",
-                "0.43748934",
-                7
-            ]
-            ],
-            "last": 1616662920
-            }
-        }
-        */
-        String intervalStr = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5" : (interval == Interval.INT_15MIN) ? "1"
-                : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60" : (interval == Interval.INT_4HOURS) ? "240"
-                : (interval == Interval.INT_1DAY) ? "1440" : "10080";
 
-        JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://api.kraken.com/0/public/OHLC?pair=" + symbol + "&interval=" + intervalStr))
-                .getAsJsonObject().get("result")
-                .getAsJsonObject().get(symbol)
-                .getAsJsonArray();
-
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesAsJsonArray) {
-            JsonArray obj = e.getAsJsonArray();
-            list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(6).getAsBigDecimal()));
-        }
-
-        return list;
-    }
     public static HashMap<String, BigDecimal> ticker24hr(String symbol) throws IOException {
         /* GET /Ticker
         {
@@ -296,5 +218,87 @@ public class Kraken extends General { // https://api.kraken.com/0/public/
         ticker.put("volume", volume);
 
         return ticker;
+    }
+
+    public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        /* GET /OHLC
+        {
+            "error": [ ],
+            "result": {
+            "XXBTZUSD": [
+            [
+                1616662740,
+                "52591.9",
+                "52599.9",
+                "52591.8",
+                "52599.9",
+                "52599.1",
+                "0.11091626",
+                5
+            ],
+            [
+                1616662800,
+                "52600.0",
+                "52674.9",
+                "52599.9",
+                "52665.2",
+                "52643.3",
+                "2.49035996",
+                30
+            ],
+            [
+                1616662860,
+                "52677.7",
+                "52686.4",
+                "52602.1",
+                "52609.5",
+                "52634.5",
+                "1.25810675",
+                20
+            ],
+            [
+                1616662920,
+                "52603.9",
+                "52627.5",
+                "52601.2",
+                "52616.4",
+                "52614.0",
+                "3.42391799",
+                23
+            ],
+            [
+                1616662980,
+                "52601.2",
+                "52601.2",
+                "52599.9",
+                "52599.9",
+                "52599.9",
+                "0.43748934",
+                7
+            ]
+            ],
+            "last": 1616662920
+            }
+        }
+        */
+
+        //1, 5, 15, 30, 60, 240, 1440, 10080, 21600
+        String intervalStr = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5" : (interval == Interval.INT_15MIN) ? "15"
+                : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60" : (interval == Interval.INT_4HOURS) ? "240"
+                : (interval == Interval.INT_1DAY) ? "1440" : "10080";
+
+        JsonArray klinesAsJsonArray = JsonParser
+                .parseString(response("https://api.kraken.com/0/public/OHLC?pair=" + symbol + "&interval=" + intervalStr))
+                .getAsJsonObject().get("result")
+                .getAsJsonObject().get(symbol)
+                .getAsJsonArray();
+
+        List<Candlestick> list = new LinkedList<>();
+        for (JsonElement e : klinesAsJsonArray) {
+            JsonArray obj = e.getAsJsonArray();
+            list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(6).getAsBigDecimal()));
+        }
+
+        return list;
     }
 }
