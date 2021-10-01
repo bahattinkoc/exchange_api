@@ -120,7 +120,7 @@ public class Huobi extends General { // https://api.huobi.pro/
         return ticker;
     }
 
-    public static List<Candlestick> klines(String symbol, Interval interval, int limit) throws Exception {
+    public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
         /* GET /market/history/kline
         {
             "ch": "market.btcusdt.kline.5min",
@@ -157,7 +157,7 @@ public class Huobi extends General { // https://api.huobi.pro/
                 : (interval == Interval.INT_1DAY) ? "1day" : "1week";
 
         JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://api.huobi.pro/market/history/kline?period=" + intervalStr + "&size=" + limit + "&symbol=" + symbol))
+                .parseString(response("https://api.huobi.pro/market/history/kline?period=" + intervalStr + "&size=300&symbol=" + symbol))
                 .getAsJsonObject().get("data")
                 .getAsJsonArray();
 

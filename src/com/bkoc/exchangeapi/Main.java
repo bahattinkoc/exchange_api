@@ -53,10 +53,11 @@ public class Main {
         for (String i : gateioSpot)
             System.out.println(i);
         System.out.println("Size: " + gateioSpot.size());
-        List<Candlestick> candlestickList = Gateio.klines("BTC_USDT", Interval.INT_1HOUR, 105);
+        List<Candlestick> candlestickList = Gateio.klines("BTC_USDT", Interval.INT_1HOUR);
         List<BigDecimal> closesGateio = Gateio.getValuesOfCandlestics(candlestickList, General.OHLCV.CLOSE);
         for (BigDecimal i : closesGateio)
             System.out.println(i);
+        System.out.println("Size: " + closesGateio.size());
         HashMap<String, BigDecimal> tickerGateio = Gateio.ticker24hr("BTC_USDT");
         System.out.println("LastPrice: " + tickerGateio.get("lastPrice") + "\nPrice Change: " + tickerGateio.get("priceChange") + "\nPercent: " + tickerGateio.get("priceChangePercent") + "\nVolume: " + tickerGateio.get("volume"));*/
 
@@ -64,7 +65,7 @@ public class Main {
         /*List<String> symbolsHuobi = Huobi.getSymbols();
         for (String i : symbolsHuobi)
             System.out.println(i);
-        List<Candlestick> candlesticksHuobi = Huobi.klines("btcusdt", Interval.INT_1HOUR, 300);
+        List<Candlestick> candlesticksHuobi = Huobi.klines("btcusdt", Interval.INT_1HOUR);
         List<BigDecimal> closesHuobi = Huobi.getValuesOfCandlestics(candlesticksHuobi, General.OHLCV.CLOSE);
         for (BigDecimal i : closesHuobi)
             System.out.println(i);
@@ -382,16 +383,16 @@ public class Main {
         System.out.println("LastPrice: " + tickerTheRock.get("lastPrice") + "\nPrice Change: " + tickerTheRock.get("priceChange") + "\nPercent: " + tickerTheRock.get("priceChangePercent") + "\nVolume: " + tickerTheRock.get("volume"));*/
 
         //TIMEX
-//        List<String> symbolsTimeX = TimeX.getSymbols();
-//        for (String i : symbolsTimeX)
-//            System.out.println(i);
-//        System.out.println("Size: " + symbolsTimeX.size());
+        /*List<String> symbolsTimeX = TimeX.getSymbols();
+        for (String i : symbolsTimeX)
+            System.out.println(i);
+        System.out.println("Size: " + symbolsTimeX.size());
         List<Candlestick> closesTimeX = TimeX.klines("BTCUSDT", Interval.INT_1HOUR);
         List<BigDecimal> closesTimeXList = TimeX.getValuesOfCandlestics(closesTimeX, General.OHLCV.CLOSE);
         for (BigDecimal i : closesTimeXList)
             System.out.println(i);
-//        HashMap<String, BigDecimal> tickerTimeX = TimeX.ticker24hr("LTCAUDT");
-//        System.out.println("LastPrice: " + tickerTimeX.get("lastPrice") + "\nPrice Change: " + tickerTimeX.get("priceChange") + "\nPercent: " + tickerTimeX.get("priceChangePercent") + "\nVolume: " + tickerTimeX.get("volume"));
+        HashMap<String, BigDecimal> tickerTimeX = TimeX.ticker24hr("LTCAUDT");
+        System.out.println("LastPrice: " + tickerTimeX.get("lastPrice") + "\nPrice Change: " + tickerTimeX.get("priceChange") + "\nPercent: " + tickerTimeX.get("priceChangePercent") + "\nVolume: " + tickerTimeX.get("volume"));*/
 
         //WHITEBIT
         /*List<String> symbolsWhiteBit = WhiteBit.getSymbols();

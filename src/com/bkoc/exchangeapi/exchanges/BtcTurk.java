@@ -117,7 +117,7 @@ public class BtcTurk extends General { // https://api.btcturk.com/api/
 
         return ticker;
     }
-    public static List<Candlestick> klines(String symbol) throws Exception {
+    public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
         /* GET https://graph-api.btcturk.com/v1/ohlcs?pair=
         [
           {
