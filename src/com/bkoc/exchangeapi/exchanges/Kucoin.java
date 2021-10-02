@@ -107,6 +107,7 @@ public class Kucoin extends General { // https://api.kucoin.com
         return ticker;
     }
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /api/v1/market/candles
         [
             [
@@ -130,23 +131,29 @@ public class Kucoin extends General { // https://api.kucoin.com
         ]
         */
 
-        //1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 8hour, 12hour, 1day, 1week
-        String intervalStr = (interval == Interval.INT_1MIN) ? "1min" : (interval == Interval.INT_3MIN) ? "3min" : (interval == Interval.INT_5MIN) ? "5min"
-                : (interval == Interval.INT_15MIN) ? "15min" : (interval == Interval.INT_30MIN) ? "30min" : (interval == Interval.INT_1HOUR) ? "1hour"
-                : (interval == Interval.INT_2HOURS) ? "2hour" : (interval == Interval.INT_4HOURS) ? "4hour" : (interval == Interval.INT_6HOURS) ? "6hour"
-                : (interval == Interval.INT_8HOURS) ? "8hour" : (interval == Interval.INT_12HOURS) ? "12hour"  : (interval == Interval.INT_1DAY) ? "1day" : "1week";
+            //1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 8hour, 12hour, 1day, 1week
+            String intervalStr = (interval == Interval.INT_1MIN) ? "1min" : (interval == Interval.INT_3MIN) ? "3min" : (interval == Interval.INT_5MIN) ? "5min"
+                    : (interval == Interval.INT_15MIN) ? "15min" : (interval == Interval.INT_30MIN) ? "30min" : (interval == Interval.INT_1HOUR) ? "1hour"
+                    : (interval == Interval.INT_2HOURS) ? "2hour" : (interval == Interval.INT_4HOURS) ? "4hour" : (interval == Interval.INT_6HOURS) ? "6hour"
+                    : (interval == Interval.INT_8HOURS) ? "8hour" : (interval == Interval.INT_12HOURS) ? "12hour" : (interval == Interval.INT_1DAY) ? "1day" : "1week";
 
-        JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://api.kucoin.com/api/v1/market/candles?symbol=" + symbol + "&type=" + intervalStr))
-                .getAsJsonObject().get("data")
-                .getAsJsonArray();
+            JsonArray klinesAsJsonArray = JsonParser
+                    .parseString(response("https://api.kucoin.com/api/v1/market/candles?symbol=" + symbol + "&type=" + intervalStr))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesAsJsonArray) {
-            JsonArray obj = e.getAsJsonArray();
-            list.add(new Candlestick(obj.get(1).getAsBigDecimal().setScale(2, RoundingMode.HALF_UP), obj.get(3).getAsBigDecimal().setScale(2, RoundingMode.HALF_UP), obj.get(4).getAsBigDecimal().setScale(2, RoundingMode.HALF_UP), obj.get(2).getAsBigDecimal().setScale(2, RoundingMode.HALF_UP), obj.get(5).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesAsJsonArray) {
+                JsonArray obj = e.getAsJsonArray();
+                list.add(new Candlestick(obj.get(1).getAsBigDecimal().setScale(2, RoundingMode.HALF_UP), obj.get(3).getAsBigDecimal().setScale(2, RoundingMode.HALF_UP), obj.get(4).getAsBigDecimal().setScale(2, RoundingMode.HALF_UP), obj.get(2).getAsBigDecimal().setScale(2, RoundingMode.HALF_UP), obj.get(5).getAsBigDecimal()));
+            }
+            Collections.reverse(list);
+
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
         }
-        Collections.reverse(list);
-        return list;
+        catch (Exception e) { return null; }
     }
 }

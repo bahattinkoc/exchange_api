@@ -89,6 +89,7 @@ public class Bittrex extends General { // https://api.bittrex.com/v3/
         return ticker;
     }
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /markets/{marketSymbol}/candles/{candleType}/{candleInterval}/recent
         [
           {
@@ -103,18 +104,23 @@ public class Bittrex extends General { // https://api.bittrex.com/v3/
         ]
         */
 
-        // MINUTE_1, MINUTE_5, HOUR_1, DAY_1
-        String intervalResolution = (interval == Interval.INT_1MIN) ? "MINUTE_1" : (interval == Interval.INT_5MIN) ? "MINUTE_5"
-                : (interval == Interval.INT_1HOUR) ? "HOUR_1" : "DAY_1";
+            // MINUTE_1, MINUTE_5, HOUR_1, DAY_1
+            String intervalResolution = (interval == Interval.INT_1MIN) ? "MINUTE_1" : (interval == Interval.INT_5MIN) ? "MINUTE_5"
+                    : (interval == Interval.INT_1HOUR) ? "HOUR_1" : "DAY_1";
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.bittrex.com/v3/markets/" + symbol + "/candles/" + intervalResolution + "/recent"))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.bittrex.com/v3/markets/" + symbol + "/candles/" + intervalResolution + "/recent"))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
 
-        return list;
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
+        }
+        catch (Exception e) { return null; }
     }
 }

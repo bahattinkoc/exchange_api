@@ -94,6 +94,7 @@ public class TheRock extends General { // https://api.therocktrading.com/v1/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /funds/BTCEUR/ohlc_statistics?period=1440&before=2021-09-23T13:00:00Z&after=before=2021-09-21T13:00:00Z
         [
            {
@@ -113,33 +114,32 @@ public class TheRock extends General { // https://api.therocktrading.com/v1/
         ]
         */
 
-        //Bunların hepsini yapabiliyor
-        int internalSeconds = (interval == Interval.INT_1MIN) ? 1 : (interval == Interval.INT_3MIN) ? 3 : (interval == Interval.INT_5MIN) ? 5
-                : (interval == Interval.INT_15MIN) ? 15 : (interval == Interval.INT_30MIN) ? 30 : (interval == Interval.INT_1HOUR) ? 60
-                : (interval == Interval.INT_4HOURS) ? 240 : (interval == Interval.INT_6HOURS) ? 360
-                : (interval == Interval.INT_12HOURS) ? 720 : (interval == Interval.INT_1DAY) ? 1440
-                : (interval == Interval.INT_1WEEK) ? 7 * 1440 : 30 * 1440;
+            //Bunların hepsini yapabiliyor
+            int internalSeconds = (interval == Interval.INT_1MIN) ? 1 : (interval == Interval.INT_3MIN) ? 3 : (interval == Interval.INT_5MIN) ? 5
+                    : (interval == Interval.INT_15MIN) ? 15 : (interval == Interval.INT_30MIN) ? 30 : (interval == Interval.INT_1HOUR) ? 60 : 240;
 
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS&");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS&");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-        calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L * 60));
-        String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
+            calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L * 60));
+            String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.therocktrading.com/v1/funds/" + symbol + "/ohlc_statistics?period=" + internalSeconds + "&before=" + end_time + "&after=" + start_time))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.therocktrading.com/v1/funds/" + symbol + "/ohlc_statistics?period=" + internalSeconds + "&before=" + end_time + "&after=" + start_time))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(),
-                    e.getAsJsonObject().get("high").getAsBigDecimal(),
-                    e.getAsJsonObject().get("low").getAsBigDecimal(),
-                    e.getAsJsonObject().get("close").getAsBigDecimal(),
-                    e.getAsJsonObject().get("base_volume").getAsBigDecimal()));
-        Collections.reverse(list);
-        return list;
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(),
+                        e.getAsJsonObject().get("high").getAsBigDecimal(),
+                        e.getAsJsonObject().get("low").getAsBigDecimal(),
+                        e.getAsJsonObject().get("close").getAsBigDecimal(),
+                        e.getAsJsonObject().get("base_volume").getAsBigDecimal()));
+            Collections.reverse(list);
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

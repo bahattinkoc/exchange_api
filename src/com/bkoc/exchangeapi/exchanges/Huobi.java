@@ -121,6 +121,7 @@ public class Huobi extends General { // https://api.huobi.pro/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /market/history/kline
         {
             "ch": "market.btcusdt.kline.5min",
@@ -151,22 +152,24 @@ public class Huobi extends General { // https://api.huobi.pro/
         }
         */
 
-        //1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1week, 1mon, 1year
-        String intervalStr = (interval == Interval.INT_1MIN) ? "1min" : (interval == Interval.INT_5MIN) ? "5min" : (interval == Interval.INT_15MIN) ? "15min"
-                : (interval == Interval.INT_30MIN) ? "30min" : (interval == Interval.INT_1HOUR) ? "60min" : (interval == Interval.INT_4HOURS) ? "4hour"
-                : (interval == Interval.INT_1DAY) ? "1day" : "1week";
+            //1min, 5min, 15min, 30min, 60min, 4hour, 1day, 1week, 1mon, 1year
+            String intervalStr = (interval == Interval.INT_1MIN) ? "1min" : (interval == Interval.INT_5MIN) ? "5min" : (interval == Interval.INT_15MIN) ? "15min"
+                    : (interval == Interval.INT_30MIN) ? "30min" : (interval == Interval.INT_1HOUR) ? "60min" : (interval == Interval.INT_4HOURS) ? "4hour"
+                    : (interval == Interval.INT_1DAY) ? "1day" : "1week";
 
-        JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://api.huobi.pro/market/history/kline?period=" + intervalStr + "&size=300&symbol=" + symbol))
-                .getAsJsonObject().get("data")
-                .getAsJsonArray();
+            JsonArray klinesAsJsonArray = JsonParser
+                    .parseString(response("https://api.huobi.pro/market/history/kline?period=" + intervalStr + "&size=300&symbol=" + symbol))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesAsJsonArray) {
-            JsonObject obj = e.getAsJsonObject();
-            list.add(new Candlestick(obj.get("open").getAsBigDecimal(), obj.get("high").getAsBigDecimal(), obj.get("low").getAsBigDecimal(), obj.get("close").getAsBigDecimal(), obj.get("vol").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesAsJsonArray) {
+                JsonObject obj = e.getAsJsonObject();
+                list.add(new Candlestick(obj.get("open").getAsBigDecimal(), obj.get("high").getAsBigDecimal(), obj.get("low").getAsBigDecimal(), obj.get("close").getAsBigDecimal(), obj.get("vol").getAsBigDecimal()));
+            }
+            Collections.reverse(list);
+            return list;
         }
-        Collections.reverse(list);
-        return list;
+        catch (Exception e) { return null; }
     }
 }

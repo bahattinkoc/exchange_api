@@ -103,6 +103,7 @@ public class BitBay extends General { // https://api.bitbay.net/rest/trading/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /candle/history/trading_pair/resolution
         {
            "status":"Ok",
@@ -122,29 +123,31 @@ public class BitBay extends General { // https://api.bitbay.net/rest/trading/
         }
         */
 
-        //Bunların hepsini yapabiliyor
-        int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
-                : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
-                : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
+            //Bunların hepsini yapabiliyor
+            int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
+                    : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
+                    : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
 
-        long from = System.currentTimeMillis() - (intervalResolution * 300 * 1000L);
-        long to = System.currentTimeMillis();
+            long from = System.currentTimeMillis() - (intervalResolution * 300 * 1000L);
+            long to = System.currentTimeMillis();
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.bitbay.net/rest/trading/candle/history/" + symbol + "/" + intervalResolution + "?from=" + from + "&to=" + to))
-                .getAsJsonObject().get("items")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.bitbay.net/rest/trading/candle/history/" + symbol + "/" + intervalResolution + "?from=" + from + "&to=" + to))
+                    .getAsJsonObject().get("items")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonArray().get(1).getAsJsonObject().get("o").getAsBigDecimal(),
-                    e.getAsJsonArray().get(1).getAsJsonObject().get("h").getAsBigDecimal(),
-                    e.getAsJsonArray().get(1).getAsJsonObject().get("l").getAsBigDecimal(),
-                    e.getAsJsonArray().get(1).getAsJsonObject().get("c").getAsBigDecimal(),
-                    e.getAsJsonArray().get(1).getAsJsonObject().get("v").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonArray().get(1).getAsJsonObject().get("o").getAsBigDecimal(),
+                        e.getAsJsonArray().get(1).getAsJsonObject().get("h").getAsBigDecimal(),
+                        e.getAsJsonArray().get(1).getAsJsonObject().get("l").getAsBigDecimal(),
+                        e.getAsJsonArray().get(1).getAsJsonObject().get("c").getAsBigDecimal(),
+                        e.getAsJsonArray().get(1).getAsJsonObject().get("v").getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

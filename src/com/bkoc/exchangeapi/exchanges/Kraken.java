@@ -221,6 +221,7 @@ public class Kraken extends General { // https://api.kraken.com/0/public/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /OHLC
         {
             "error": [ ],
@@ -282,23 +283,28 @@ public class Kraken extends General { // https://api.kraken.com/0/public/
         }
         */
 
-        //1, 5, 15, 30, 60, 240, 1440, 10080, 21600
-        String intervalStr = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5" : (interval == Interval.INT_15MIN) ? "15"
-                : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60" : (interval == Interval.INT_4HOURS) ? "240"
-                : (interval == Interval.INT_1DAY) ? "1440" : "10080";
+            //1, 5, 15, 30, 60, 240, 1440, 10080, 21600
+            String intervalStr = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5" : (interval == Interval.INT_15MIN) ? "15"
+                    : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60" : (interval == Interval.INT_4HOURS) ? "240"
+                    : (interval == Interval.INT_1DAY) ? "1440" : "10080";
 
-        JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://api.kraken.com/0/public/OHLC?pair=" + symbol + "&interval=" + intervalStr))
-                .getAsJsonObject().get("result")
-                .getAsJsonObject().get(symbol)
-                .getAsJsonArray();
+            JsonArray klinesAsJsonArray = JsonParser
+                    .parseString(response("https://api.kraken.com/0/public/OHLC?pair=" + symbol + "&interval=" + intervalStr))
+                    .getAsJsonObject().get("result")
+                    .getAsJsonObject().get(symbol)
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesAsJsonArray) {
-            JsonArray obj = e.getAsJsonArray();
-            list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(6).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesAsJsonArray) {
+                JsonArray obj = e.getAsJsonArray();
+                list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(6).getAsBigDecimal()));
+            }
+
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
         }
-
-        return list;
+        catch (Exception e) { return null; }
     }
 }

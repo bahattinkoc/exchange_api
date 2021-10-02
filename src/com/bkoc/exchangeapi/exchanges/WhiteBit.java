@@ -93,6 +93,7 @@ public class WhiteBit extends General { // https://whitebit.com/api/v4/public/ -
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /api/v1/public/kline?market=BTC_USDT&interval=1h&limit=100&start=1572415247&end=1632415247
         {
           "success": true,
@@ -112,29 +113,31 @@ public class WhiteBit extends General { // https://whitebit.com/api/v4/public/ -
         }
         */
 
-        //1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M.
-        int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
-                : (interval == Interval.INT_8HOURS) ? 28800 : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
-                : (interval == Interval.INT_3DAYS) ? 3 * 86400 : (interval == Interval.INT_1WEEK) ? 7 * 86400 : 30 * 86400;
+            //1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M.
+            int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
+                    : (interval == Interval.INT_8HOURS) ? 28800 : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
+                    : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
 
-        long from = (System.currentTimeMillis() / 1000L) - (intervalResolution * 300);
-        long to = System.currentTimeMillis() / 1000L;
+            long from = (System.currentTimeMillis() / 1000L) - (intervalResolution * 300);
+            long to = System.currentTimeMillis() / 1000L;
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://whitebit.com/api/v1/public/kline?market=" + symbol + "&interval=" + interval.getValue() + "&limit=301&start=" + from + "&end=" + to))
-                .getAsJsonObject().get("result")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://whitebit.com/api/v1/public/kline?market=" + symbol + "&interval=" + interval.getValue() + "&limit=301&start=" + from + "&end=" + to))
+                    .getAsJsonObject().get("result")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(),
-                    e.getAsJsonArray().get(3).getAsBigDecimal(),
-                    e.getAsJsonArray().get(4).getAsBigDecimal(),
-                    e.getAsJsonArray().get(2).getAsBigDecimal(),
-                    e.getAsJsonArray().get(5).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(),
+                        e.getAsJsonArray().get(3).getAsBigDecimal(),
+                        e.getAsJsonArray().get(4).getAsBigDecimal(),
+                        e.getAsJsonArray().get(2).getAsBigDecimal(),
+                        e.getAsJsonArray().get(5).getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

@@ -99,6 +99,7 @@ public class Cryptocom extends General { // https://api.crypto.com/v2/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /get-candlestick?instrument_name=BTC_USDT&timeframe=5m
         {
           "code":0,
@@ -116,19 +117,24 @@ public class Cryptocom extends General { // https://api.crypto.com/v2/
         }
         */
 
-        //1m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 1D, 7D, 14D, 1M
-        String intervalResolution = (interval == Interval.INT_1DAY) ? "1D" : (interval == Interval.INT_1WEEK) ? "7D" : interval.getValue();
+            //1m, 5m, 15m, 30m, 1h, 4h, 6h, 12h, 1D, 7D, 14D, 1M
+            String intervalResolution = (interval == Interval.INT_1DAY) ? "1D" : (interval == Interval.INT_1WEEK) ? "7D" : interval.getValue();
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.crypto.com/v2/public/get-candlestick?instrument_name=" + symbol + "&timeframe=" + intervalResolution))
-                .getAsJsonObject().get("result")
-                .getAsJsonObject().get("data")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.crypto.com/v2/public/get-candlestick?instrument_name=" + symbol + "&timeframe=" + intervalResolution))
+                    .getAsJsonObject().get("result")
+                    .getAsJsonObject().get("data")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("o").getAsBigDecimal(), e.getAsJsonObject().get("h").getAsBigDecimal(), e.getAsJsonObject().get("l").getAsBigDecimal(), e.getAsJsonObject().get("c").getAsBigDecimal(), e.getAsJsonObject().get("v").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("o").getAsBigDecimal(), e.getAsJsonObject().get("h").getAsBigDecimal(), e.getAsJsonObject().get("l").getAsBigDecimal(), e.getAsJsonObject().get("c").getAsBigDecimal(), e.getAsJsonObject().get("v").getAsBigDecimal()));
 
-        return list;
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
+        }
+        catch (Exception e) { return null; }
     }
 }

@@ -4,7 +4,7 @@ import com.bkoc.exchangeapi.Candlestick;
 import com.bkoc.exchangeapi.General;
 import com.bkoc.exchangeapi.Interval;
 import com.google.gson.*;
-import com.squareup.okhttp.*;
+import okhttp3.*;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -132,6 +132,7 @@ public class Binance extends General { //https://www.binance.com/api/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /*[
               [
                 1499040000000,      // Open time
@@ -149,16 +150,18 @@ public class Binance extends General { //https://www.binance.com/api/
               ]
         ]*/
 
-        JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://www.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval.getValue() + "&limit=300"))
-                .getAsJsonArray();
+            JsonArray klinesAsJsonArray = JsonParser
+                    .parseString(response("https://www.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval.getValue() + "&limit=300"))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesAsJsonArray) {
-            JsonArray obj = e.getAsJsonArray();
-            list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesAsJsonArray) {
+                JsonArray obj = e.getAsJsonArray();
+                list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
+            }
+
+            return list;
         }
-
-        return list;
+        catch (Exception e) { return null; }
     }
 }

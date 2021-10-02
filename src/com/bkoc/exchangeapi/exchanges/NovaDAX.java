@@ -99,6 +99,7 @@ public class NovaDAX extends General { // https://api.novadax.com/v1/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /market/kline/history?symbol=BTC_BRL&from=1567619280&to=1567620000&unit=ONE_MIN
         {
             "code": "A10000",
@@ -119,32 +120,33 @@ public class NovaDAX extends General { // https://api.novadax.com/v1/
         }
         */
 
-        //ONE_MIN, FIVE_MIN, FIFTEEN_MIN, HALF_HOU, ONE_HOU, ONE_DAY, ONE_WEE, ONE_MON
-        String intervalResolution = (interval == Interval.INT_1MIN) ? "ONE_MIN" : (interval == Interval.INT_5MIN) ? "FIVE_MIN"
-                : (interval == Interval.INT_15MIN) ? "FIFTEEN_MIN" : (interval == Interval.INT_30MIN) ? "HALF_HOU"
-                : (interval == Interval.INT_1HOUR) ? "ONE_HOU" : (interval == Interval.INT_1DAY) ? "ONE_DAY"
-                : (interval == Interval.INT_1WEEK) ? "ONE_WEE" : "ONE_MON";
+            //ONE_MIN, FIVE_MIN, FIFTEEN_MIN, HALF_HOU, ONE_HOU, ONE_DAY, ONE_WEE, ONE_MON
+            String intervalResolution = (interval == Interval.INT_1MIN) ? "ONE_MIN" : (interval == Interval.INT_5MIN) ? "FIVE_MIN"
+                    : (interval == Interval.INT_15MIN) ? "FIFTEEN_MIN" : (interval == Interval.INT_30MIN) ? "HALF_HOU"
+                    : (interval == Interval.INT_1HOUR) ? "ONE_HOU" : (interval == Interval.INT_1DAY) ? "ONE_DAY" : "ONE_WEE";
 
-        int intervalInt = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_1DAY) ? 86400 : (interval == Interval.INT_1WEEK) ? 7 * 86400 : 30 * 86400;
+            int intervalInt = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_1DAY) ? 86400 : 7 * 86400;
 
-        long from = (System.currentTimeMillis() / 1000L) - (intervalInt * 300);
-        long to = System.currentTimeMillis() / 1000L;
+            long from = (System.currentTimeMillis() / 1000L) - (intervalInt * 300);
+            long to = System.currentTimeMillis() / 1000L;
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.novadax.com/v1/market/kline/history?symbol=" + symbol + "&from=" + from + "&to=" + to + "&unit=" + intervalResolution))
-                .getAsJsonObject().get("data")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.novadax.com/v1/market/kline/history?symbol=" + symbol + "&from=" + from + "&to=" + to + "&unit=" + intervalResolution))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("openPrice").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("highPrice").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("lowPrice").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("closePrice").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("vol").getAsBigDecimal().stripTrailingZeros()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("openPrice").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("highPrice").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("lowPrice").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("closePrice").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("vol").getAsBigDecimal().stripTrailingZeros()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

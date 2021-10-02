@@ -101,6 +101,7 @@ public class CoinDCX extends General { // https://api.coindcx.com/ --- https://p
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /market_data/candles?pair=B-BTC_USDT&interval=1h
         [
           {
@@ -117,19 +118,25 @@ public class CoinDCX extends General { // https://api.coindcx.com/ --- https://p
         ],
         */
 
-        //1m 5m 15m 30m 1h 2h 4h 6h 8h 1d 3d 1w 1M
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://public.coindcx.com/market_data/candles?pair=" + symbol + "&interval=" + interval.getValue()))
-                .getAsJsonArray();
+            //1m 5m 15m 30m 1h 2h 4h 6h 8h 1d 3d 1w 1M
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://public.coindcx.com/market_data/candles?pair=" + symbol + "&interval=" + interval.getValue()))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("high").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("low").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("close").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("volume").getAsBigDecimal().stripTrailingZeros()));
-        Collections.reverse(list);
-        return list;
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("high").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("low").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("close").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("volume").getAsBigDecimal().stripTrailingZeros()));
+            Collections.reverse(list);
+
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
+        }
+        catch (Exception e) { return null; }
     }
 }

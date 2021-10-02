@@ -87,6 +87,7 @@ public class Poloniex extends General { // https://poloniex.com/public
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET ?command=returnChartData&currencyPair=BTC_XMR&period=14400
         [
             {
@@ -113,20 +114,22 @@ public class Poloniex extends General { // https://poloniex.com/public
         ]
         */
 
-        //300, 900, 1800, 7200, 14400, and 86400 saniye
-        int intervalResolution = (interval == Interval.INT_5MIN) ? 300 : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800
-                : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : 86400;
+            //300, 900, 1800, 7200, 14400, and 86400 saniye
+            int intervalResolution = (interval == Interval.INT_5MIN) ? 300 : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800
+                    : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : 86400;
 
-        long start = (System.currentTimeMillis() / 1000L) - (300 * intervalResolution);
+            long start = (System.currentTimeMillis() / 1000L) - (300 * intervalResolution);
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://poloniex.com/public?command=returnChartData&currencyPair=" + symbol + "&start=" + start + "&end=" + (System.currentTimeMillis() / 1000L) + "&period=" + intervalResolution))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://poloniex.com/public?command=returnChartData&currencyPair=" + symbol + "&start=" + start + "&end=" + (System.currentTimeMillis() / 1000L) + "&period=" + intervalResolution))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

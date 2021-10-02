@@ -97,6 +97,7 @@ public class Gateio extends General { //https://api.gateio.ws/api/v4/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /spot/candlesticks
         [
           [
@@ -109,18 +110,20 @@ public class Gateio extends General { //https://api.gateio.ws/api/v4/
           ]
         ]*/
 
-        //10s, 1m, 5m, 15m, 30m, 1h, 4h, 8h, 1d, 7d
-        String intervalStr = (interval.getValue().equals("1w")) ? "7d" : interval.getValue();
-        JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://api.gateio.ws/api/v4/spot/candlesticks?currency_pair=" + symbol + "&limit=300&interval=" + intervalStr))
-                .getAsJsonArray();
+            //10s, 1m, 5m, 15m, 30m, 1h, 4h, 8h, 1d, 7d
+            String intervalStr = (interval.getValue().equals("1w")) ? "7d" : interval.getValue();
+            JsonArray klinesAsJsonArray = JsonParser
+                    .parseString(response("https://api.gateio.ws/api/v4/spot/candlesticks?currency_pair=" + symbol + "&limit=300&interval=" + intervalStr))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesAsJsonArray) {
-            JsonArray obj = e.getAsJsonArray();
-            list.add(new Candlestick(obj.get(5).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(1).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesAsJsonArray) {
+                JsonArray obj = e.getAsJsonArray();
+                list.add(new Candlestick(obj.get(5).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(1).getAsBigDecimal()));
+            }
+
+            return list;
         }
-
-        return list;
+        catch (Exception e) { return null; }
     }
 }

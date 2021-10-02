@@ -79,6 +79,7 @@ public class Gemini extends General { // https://api.gemini.com
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /v2/candles/:symbol/:time_frame
         [
             [
@@ -99,18 +100,24 @@ public class Gemini extends General { // https://api.gemini.com
         ]
         */
 
-        //1m, 5m, 15m, 30m, 1hr, 6hr, 1day
-        String intervalResolution = (interval == Interval.INT_1HOUR) ? "1hr" : (interval == Interval.INT_6HOURS) ? "6hr"
-                : (interval == Interval.INT_1DAY) ? "1day" : interval.getValue();
+            //1m, 5m, 15m, 30m, 1hr, 6hr, 1day
+            String intervalResolution = (interval == Interval.INT_1HOUR) ? "1hr" : (interval == Interval.INT_6HOURS) ? "6hr"
+                    : (interval == Interval.INT_1DAY) ? "1day" : interval.getValue();
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.gemini.com/v2/candles/" + symbol.toLowerCase(Locale.ROOT) + "/" + intervalResolution))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.gemini.com/v2/candles/" + symbol.toLowerCase(Locale.ROOT) + "/" + intervalResolution))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(), e.getAsJsonArray().get(2).getAsBigDecimal(), e.getAsJsonArray().get(3).getAsBigDecimal(), e.getAsJsonArray().get(4).getAsBigDecimal(), e.getAsJsonArray().get(5).getAsBigDecimal()));
-        Collections.reverse(list);
-        return list;
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(), e.getAsJsonArray().get(2).getAsBigDecimal(), e.getAsJsonArray().get(3).getAsBigDecimal(), e.getAsJsonArray().get(4).getAsBigDecimal(), e.getAsJsonArray().get(5).getAsBigDecimal()));
+            Collections.reverse(list);
+
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
+        }
+        catch (Exception e) { return null; }
     }
 }

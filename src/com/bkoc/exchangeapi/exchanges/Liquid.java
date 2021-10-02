@@ -119,6 +119,7 @@ public class Liquid extends General { // https://api.liquid.com/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /products/{product_id}/ohlc?resolution={resolution}
         {
             "data":
@@ -136,37 +137,42 @@ public class Liquid extends General { // https://api.liquid.com/
         }
         */
 
-        //Burda yazılanların hepsini kabul ediyor
-        int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
-                : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
-                : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
+            //Burda yazılanların hepsini kabul ediyor
+            int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
+                    : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
+                    : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
 
-        JsonArray symbolsListJsonObj = JsonParser
-                .parseString(response("https://api.liquid.com/products"))
-                .getAsJsonArray();
+            JsonArray symbolsListJsonObj = JsonParser
+                    .parseString(response("https://api.liquid.com/products"))
+                    .getAsJsonArray();
 
-        String id = "";
-        for (JsonElement i : symbolsListJsonObj)
-            if (i.getAsJsonObject().get("currency_pair_code").getAsString().equals(symbol)) {
-                id = i.getAsJsonObject().get("id").getAsString();
-                break;
-            }
+            String id = "";
+            for (JsonElement i : symbolsListJsonObj)
+                if (i.getAsJsonObject().get("currency_pair_code").getAsString().equals(symbol)) {
+                    id = i.getAsJsonObject().get("id").getAsString();
+                    break;
+                }
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.liquid.com/products/" + id + "/ohlc?resolution=" + intervalResolution))
-                .getAsJsonObject().get("data")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.liquid.com/products/" + id + "/ohlc?resolution=" + intervalResolution))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(),
-                    e.getAsJsonArray().get(2).getAsBigDecimal(),
-                    e.getAsJsonArray().get(3).getAsBigDecimal(),
-                    e.getAsJsonArray().get(4).getAsBigDecimal(),
-                    e.getAsJsonArray().get(5).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(),
+                        e.getAsJsonArray().get(2).getAsBigDecimal(),
+                        e.getAsJsonArray().get(3).getAsBigDecimal(),
+                        e.getAsJsonArray().get(4).getAsBigDecimal(),
+                        e.getAsJsonArray().get(5).getAsBigDecimal()));
 
-        return list;
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
+        }
+        catch (Exception e) { return null; }
     }
 }

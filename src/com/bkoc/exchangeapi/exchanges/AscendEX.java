@@ -96,6 +96,7 @@ public class AscendEX extends General { // https://ascendex.com/api/pro/v1/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /barhist?symbol=ASD/USDT&interval=1
         {
             "code": 0,
@@ -127,25 +128,27 @@ public class AscendEX extends General { // https://ascendex.com/api/pro/v1/
         }
         */
 
-        //Sadece bunları yapabiliyor
-        String intervalResolution = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5"
-                : (interval == Interval.INT_15MIN) ? "15" : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60"
-                : (interval == Interval.INT_2HOURS) ? "120" : (interval == Interval.INT_4HOURS) ? "240" : (interval == Interval.INT_6HOURS) ? "360"
-                : (interval == Interval.INT_12HOURS) ? "720" : (interval == Interval.INT_1DAY) ? "1d" : (interval == Interval.INT_1WEEK) ? "1w" : "1m";
+            //Sadece bunları yapabiliyor
+            String intervalResolution = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5"
+                    : (interval == Interval.INT_15MIN) ? "15" : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60"
+                    : (interval == Interval.INT_2HOURS) ? "120" : (interval == Interval.INT_4HOURS) ? "240" : (interval == Interval.INT_6HOURS) ? "360"
+                    : (interval == Interval.INT_12HOURS) ? "720" : (interval == Interval.INT_1DAY) ? "1d" : "1w";
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://ascendex.com/api/pro/v1/barhist?symbol=" + symbol + "&interval=" + intervalResolution + "&n=300"))
-                .getAsJsonObject().get("data")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://ascendex.com/api/pro/v1/barhist?symbol=" + symbol + "&interval=" + intervalResolution + "&n=300"))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("data").getAsJsonObject().get("o").getAsBigDecimal(),
-                    e.getAsJsonObject().get("data").getAsJsonObject().get("h").getAsBigDecimal(),
-                    e.getAsJsonObject().get("data").getAsJsonObject().get("l").getAsBigDecimal(),
-                    e.getAsJsonObject().get("data").getAsJsonObject().get("c").getAsBigDecimal(),
-                    e.getAsJsonObject().get("data").getAsJsonObject().get("v").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("data").getAsJsonObject().get("o").getAsBigDecimal(),
+                        e.getAsJsonObject().get("data").getAsJsonObject().get("h").getAsBigDecimal(),
+                        e.getAsJsonObject().get("data").getAsJsonObject().get("l").getAsBigDecimal(),
+                        e.getAsJsonObject().get("data").getAsJsonObject().get("c").getAsBigDecimal(),
+                        e.getAsJsonObject().get("data").getAsJsonObject().get("v").getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

@@ -103,6 +103,7 @@ public class Bithumb extends General { // https://api.bithumb.com
         return ticker;
     }
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /public/candlestick/{order_currency}_{payment_currency}/{chart_intervals}
         {
             “status”: “0000”,
@@ -128,20 +129,25 @@ public class Bithumb extends General { // https://api.bithumb.com
         }
         */
 
-        //1m, 3m, 5m, 10m, 30m, 1h, 6h, 12h, 24h
-        String intervalStr = (interval == Interval.INT_1DAY) ? "24h" : interval.getValue();
+            //1m, 3m, 5m, 10m, 30m, 1h, 6h, 12h, 24h
+            String intervalStr = (interval == Interval.INT_1DAY) ? "24h" : interval.getValue();
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.bithumb.com/public/candlestick/" + symbol + "/" + intervalStr))
-                .getAsJsonObject().get("data")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.bithumb.com/public/candlestick/" + symbol + "/" + intervalStr))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson) {
-            JsonArray obj = e.getAsJsonArray();
-            list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson) {
+                JsonArray obj = e.getAsJsonArray();
+                list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
+            }
+
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
         }
-
-        return list;
+        catch (Exception e) { return null; }
     }
 }

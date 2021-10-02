@@ -75,6 +75,7 @@ public class Bitstamp extends General { // https://www.bitstamp.net/api/v2/
         return ticker;
     }
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET ohlc/btcusdt/?step=60&limit=100
         {
             "data":
@@ -96,23 +97,24 @@ public class Bitstamp extends General { // https://www.bitstamp.net/api/v2/
         }
         */
 
-        //Bunları yapabiliyor
-        int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180: (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ?  21600
-                : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ?  86400
-                : (interval == Interval.INT_3DAYS) ? 3*86400 : (interval == Interval.INT_1WEEK) ? 7*86400 : 30*86400;
+            //Bunları yapabiliyor
+            int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
+                    : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400 : 3 * 86400;
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://www.bitstamp.net/api/v2/ohlc/" + symbol.toLowerCase(Locale.ROOT) + "/?step=" + intervalResolution + "&limit=300"))
-                .getAsJsonObject().get("data")
-                .getAsJsonObject().get("ohlc")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://www.bitstamp.net/api/v2/ohlc/" + symbol.toLowerCase(Locale.ROOT) + "/?step=" + intervalResolution + "&limit=300"))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonObject().get("ohlc")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

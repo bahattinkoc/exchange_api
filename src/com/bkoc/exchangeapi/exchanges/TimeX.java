@@ -98,6 +98,7 @@ public class TimeX extends General { // https://plasma-relay-backend.timex.io/pu
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /candles?from=2021-01-01T00%3A00%3A00Z&market=TIMEETH&period=I1&till=2021-02-01T00%3A00%3A00Z&useCache=true
         [
           {
@@ -112,35 +113,37 @@ public class TimeX extends General { // https://plasma-relay-backend.timex.io/pu
         ]
         */
 
-        //I1, I5, I15, I30, H1, D1, W1
-        String internalResolution = (interval == Interval.INT_1MIN) ? "I1" : (interval == Interval.INT_5MIN) ? "I5"
-                : (interval == Interval.INT_15MIN) ? "I15" : (interval == Interval.INT_30MIN) ? "I30" : (interval == Interval.INT_1HOUR) ? "H1"
-                : (interval == Interval.INT_1DAY) ? "D1" : "W1";
+            //I1, I5, I15, I30, H1, D1, W1
+            String internalResolution = (interval == Interval.INT_1MIN) ? "I1" : (interval == Interval.INT_5MIN) ? "I5"
+                    : (interval == Interval.INT_15MIN) ? "I15" : (interval == Interval.INT_30MIN) ? "I30" : (interval == Interval.INT_1HOUR) ? "H1"
+                    : (interval == Interval.INT_1DAY) ? "D1" : "W1";
 
-        int internalSeconds = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_1DAY) ? 86400 : 7 * 86400;
+            int internalSeconds = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_1DAY) ? 86400 : 7 * 86400;
 
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS&");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS&");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-        calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L));
-        String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
+            calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L));
+            String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://plasma-relay-backend.timex.io/public/candles?from=" + start_time + "&market=" + symbol + "&period=" + internalResolution + "&till=" + end_time))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://plasma-relay-backend.timex.io/public/candles?from=" + start_time + "&market=" + symbol + "&period=" + internalResolution + "&till=" + end_time))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(),
-                    e.getAsJsonObject().get("high").getAsBigDecimal(),
-                    e.getAsJsonObject().get("low").getAsBigDecimal(),
-                    e.getAsJsonObject().get("close").getAsBigDecimal(),
-                    e.getAsJsonObject().get("volume").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(),
+                        e.getAsJsonObject().get("high").getAsBigDecimal(),
+                        e.getAsJsonObject().get("low").getAsBigDecimal(),
+                        e.getAsJsonObject().get("close").getAsBigDecimal(),
+                        e.getAsJsonObject().get("volume").getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

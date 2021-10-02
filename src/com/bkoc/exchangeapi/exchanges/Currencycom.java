@@ -134,6 +134,7 @@ public class Currencycom extends General { // https://api-adapter.backend.curren
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /klines?symbol=BTC/USDT&interval=1m&limit=1
         [
            [
@@ -147,19 +148,21 @@ public class Currencycom extends General { // https://api-adapter.backend.curren
         ]
         */
 
-        //Sadece bunlar
-        String intervalResolution = (interval == Interval.INT_1MIN) ? "1m" : (interval == Interval.INT_5MIN) ? "5m"
-                : (interval == Interval.INT_15MIN) ? "15m" : (interval == Interval.INT_30MIN) ? "30m" : (interval == Interval.INT_1HOUR) ? "1h"
-                : (interval == Interval.INT_4HOURS) ? "4h" : (interval == Interval.INT_1DAY) ? "1d" : "1w";
+            //Sadece bunlar
+            String intervalResolution = (interval == Interval.INT_1MIN) ? "1m" : (interval == Interval.INT_5MIN) ? "5m"
+                    : (interval == Interval.INT_15MIN) ? "15m" : (interval == Interval.INT_30MIN) ? "30m" : (interval == Interval.INT_1HOUR) ? "1h"
+                    : (interval == Interval.INT_4HOURS) ? "4h" : (interval == Interval.INT_1DAY) ? "1d" : "1w";
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api-adapter.backend.currency.com/api/v2/klines?symbol=" + symbol + "&interval=" + intervalResolution + "&limit=300"))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api-adapter.backend.currency.com/api/v2/klines?symbol=" + symbol + "&interval=" + intervalResolution + "&limit=300"))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(), e.getAsJsonArray().get(2).getAsBigDecimal(), e.getAsJsonArray().get(3).getAsBigDecimal(), e.getAsJsonArray().get(4).getAsBigDecimal(), e.getAsJsonArray().get(5).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(), e.getAsJsonArray().get(2).getAsBigDecimal(), e.getAsJsonArray().get(3).getAsBigDecimal(), e.getAsJsonArray().get(4).getAsBigDecimal(), e.getAsJsonArray().get(5).getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

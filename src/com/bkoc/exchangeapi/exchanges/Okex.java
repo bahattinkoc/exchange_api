@@ -97,6 +97,7 @@ public class Okex extends General { // https://www.okex.com
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /api/spot/v3/instruments/<instrument_id>/candles?granularity=86400
         [
             [
@@ -118,23 +119,29 @@ public class Okex extends General { // https://www.okex.com
         ]
         */
 
-        //Hepsini yapıyor
-        int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180: (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ?  21600
-                : (interval == Interval.INT_8HOURS) ? 28800 : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ?  86400
-                : (interval == Interval.INT_3DAYS) ? 3*86400 : (interval == Interval.INT_1WEEK) ? 7*86400 : 30*86400;
+            //Bunları yapıyor
+            int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
+                    : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
+                    : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://www.okex.com/api/spot/v3/instruments/" + symbol + "/candles?granularity=" + intervalResolution))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://www.okex.com/api/spot/v3/instruments/" + symbol + "/candles?granularity=" + intervalResolution))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson) {
-            JsonArray obj = e.getAsJsonArray();
-            list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson) {
+                JsonArray obj = e.getAsJsonArray();
+                list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
+            }
+            Collections.reverse(list);
+
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
         }
-        Collections.reverse(list);
-        return list;
+        catch (Exception e) { return null; }
     }
 }

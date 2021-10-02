@@ -68,6 +68,7 @@ public class Bitfinex extends General { // https://api-pub.bitfinex.com/v2/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET candles/trade:TimeFrame:Symbol/hist?limit=100
         [
             [
@@ -82,19 +83,21 @@ public class Bitfinex extends General { // https://api-pub.bitfinex.com/v2/
         ]
         */
 
-        //1m, 5m, 15m, 30m, 1h, 3h, 4h, 6h, 12h, 1D, 7D, 14D, 1M
-        String intervalStr = (interval == Interval.INT_1DAY) ? "1D" : (interval == Interval.INT_1WEEK) ? "7D" : interval.getValue();
+            //1m, 5m, 15m, 30m, 1h, 3h, 4h, 6h, 12h, 1D, 7D, 14D, 1M
+            String intervalStr = (interval == Interval.INT_1DAY) ? "1D" : (interval == Interval.INT_1WEEK) ? "7D" : interval.getValue();
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api-pub.bitfinex.com/v2/candles/trade:" + intervalStr + ":t" + symbol + "/hist?limit=300"))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api-pub.bitfinex.com/v2/candles/trade:" + intervalStr + ":t" + symbol + "/hist?limit=300"))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson) {
-            JsonArray obj = e.getAsJsonArray();
-            list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson) {
+                JsonArray obj = e.getAsJsonArray();
+                list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
+            }
+            Collections.reverse(list);
+            return list;
         }
-        Collections.reverse(list);
-        return list;
+        catch (Exception e) { return null; }
     }
 }

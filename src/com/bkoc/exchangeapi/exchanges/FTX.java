@@ -7,9 +7,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -19,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FTX extends General { //https://ftx.com/api/
-    public enum Permissions{
+    public enum Permissions {
         spot,
         future
     }
@@ -60,7 +57,7 @@ public class FTX extends General { //https://ftx.com/api/
                 .getAsJsonObject().get("result")
                 .getAsJsonArray();
         List<String> list = new LinkedList<>();
-        for (JsonElement x : symbolsList){
+        for (JsonElement x : symbolsList) {
             JsonObject object = x.getAsJsonObject();
             list.add(object.get("name").getAsString());
         }
@@ -111,8 +108,8 @@ public class FTX extends General { //https://ftx.com/api/
                 .get("result")
                 .getAsJsonArray();
 
-        BigDecimal open = klinesAsJsonArray.get(klinesAsJsonArray.size()-1).getAsJsonObject().get("open").getAsBigDecimal();
-        BigDecimal close = klinesAsJsonArray.get(klinesAsJsonArray.size()-1).getAsJsonObject().get("close").getAsBigDecimal();
+        BigDecimal open = klinesAsJsonArray.get(klinesAsJsonArray.size() - 1).getAsJsonObject().get("open").getAsBigDecimal();
+        BigDecimal close = klinesAsJsonArray.get(klinesAsJsonArray.size() - 1).getAsJsonObject().get("close").getAsBigDecimal();
 
         BigDecimal priceChange = close.subtract(open);
         BigDecimal percent = priceChange.divide(open, 8, RoundingMode.HALF_UP).multiply(BigDecimal.valueOf(100));
@@ -121,12 +118,13 @@ public class FTX extends General { //https://ftx.com/api/
         ticker.put("lastPrice", close);
         ticker.put("priceChange", priceChange);
         ticker.put("priceChangePercent", percent);
-        ticker.put("volume", klinesAsJsonArray.get(klinesAsJsonArray.size()-1).getAsJsonObject().get("volume").getAsBigDecimal());
+        ticker.put("volume", klinesAsJsonArray.get(klinesAsJsonArray.size() - 1).getAsJsonObject().get("volume").getAsBigDecimal());
 
         return ticker;
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /markets/{market_name}/candles?resolution={resolution}&start_time={start_time}&end_time={end_time}
         {
           "success": true,
@@ -142,23 +140,27 @@ public class FTX extends General { //https://ftx.com/api/
           ]
         }*/
 
-        //Hepsini yapıyor
-        int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180: (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ?  21600
-                : (interval == Interval.INT_8HOURS) ? 28800 : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ?  86400
-                : (interval == Interval.INT_3DAYS) ? 3*86400 : (interval == Interval.INT_1WEEK) ? 7*86400 : 30*86400;
+            //Hepsini yapıyor
+            int intervalResolution = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_1DAY) ? 86400
+                    : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
 
-        JsonArray klinesAsJsonArray = JsonParser
-                .parseString(response("https://ftx.com/api/markets/" + symbol + "/candles?resolution=" + intervalResolution))
-                .getAsJsonObject().get("result")
-                .getAsJsonArray();
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesAsJsonArray) {
-            JsonObject obj = e.getAsJsonObject();
-            list.add(new Candlestick(obj.get("open").getAsBigDecimal(), obj.get("high").getAsBigDecimal(), obj.get("low").getAsBigDecimal(), obj.get("close").getAsBigDecimal(), obj.get("volume").getAsBigDecimal()));
+            JsonArray klinesAsJsonArray = JsonParser
+                    .parseString(response("https://ftx.com/api/markets/" + symbol + "/candles?resolution=" + intervalResolution))
+                    .getAsJsonObject().get("result")
+                    .getAsJsonArray();
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesAsJsonArray) {
+                JsonObject obj = e.getAsJsonObject();
+                list.add(new Candlestick(obj.get("open").getAsBigDecimal(), obj.get("high").getAsBigDecimal(), obj.get("low").getAsBigDecimal(), obj.get("close").getAsBigDecimal(), obj.get("volume").getAsBigDecimal()));
+            }
+
+            if (list.size() < 310)
+                return list;
+            else
+                return list.subList(list.size() - 300, list.size());
         }
-
-        return list;
+        catch (Exception e) { return null; }
     }
 }

@@ -102,6 +102,7 @@ public class Probit extends General { // https://api.probit.com/api/exchange/v1/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /candle?market_ids=BCH-BTC&interval=1m&limit=2&sort=desc&start_time=2018-08-24T08:00:18.054Z&end_time=2019-08-24T08:00:18.054Z
         {
            "data":[
@@ -120,44 +121,42 @@ public class Probit extends General { // https://api.probit.com/api/exchange/v1/
         }
         */
 
-        //Bunların hepsini yapabiliyor
-        String intervalResolution = (interval == Interval.INT_1MIN) ? "1m" : (interval == Interval.INT_3MIN) ? "3m"
-                : (interval == Interval.INT_5MIN) ? "5m" : (interval == Interval.INT_15MIN) ? "15m"
-                : (interval == Interval.INT_30MIN) ? "30m" : (interval == Interval.INT_1HOUR) ? "1h"
-                : (interval == Interval.INT_4HOURS) ? "4h" : (interval == Interval.INT_6HOURS) ? "6h"
-                : (interval == Interval.INT_12HOURS) ? "12h" : (interval == Interval.INT_1DAY) ? "1D"
-                : (interval == Interval.INT_1WEEK) ? "1W" : "1M";
+            //Bunların hepsini yapabiliyor
+            String intervalResolution = (interval == Interval.INT_1MIN) ? "1m" : (interval == Interval.INT_3MIN) ? "3m"
+                    : (interval == Interval.INT_5MIN) ? "5m" : (interval == Interval.INT_15MIN) ? "15m"
+                    : (interval == Interval.INT_30MIN) ? "30m" : (interval == Interval.INT_1HOUR) ? "1h"
+                    : (interval == Interval.INT_4HOURS) ? "4h" : (interval == Interval.INT_6HOURS) ? "6h" : "12h";
 
-        int internalSeconds = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600
-                : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
-                : (interval == Interval.INT_1WEEK) ? 7 * 86400 : 30 * 86400;
+            int internalSeconds = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_3MIN) ? 180 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_6HOURS) ? 21600 : 43200;
 
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS&");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS&");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-        calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L));
-        String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
+            calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L));
+            String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.probit.com/api/exchange/v1/candle?market_ids=" + symbol +
-                        "&interval=" + intervalResolution + "&limit=300&sort=desc" +
-                        "&start_time=" + start_time +
-                        "&end_time=" + end_time))
-                .getAsJsonObject().get("data")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.probit.com/api/exchange/v1/candle?market_ids=" + symbol +
+                            "&interval=" + intervalResolution + "&limit=300&sort=desc" +
+                            "&start_time=" + start_time +
+                            "&end_time=" + end_time))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(),
-                    e.getAsJsonObject().get("high").getAsBigDecimal(),
-                    e.getAsJsonObject().get("low").getAsBigDecimal(),
-                    e.getAsJsonObject().get("close").getAsBigDecimal(),
-                    e.getAsJsonObject().get("base_volume").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(),
+                        e.getAsJsonObject().get("high").getAsBigDecimal(),
+                        e.getAsJsonObject().get("low").getAsBigDecimal(),
+                        e.getAsJsonObject().get("close").getAsBigDecimal(),
+                        e.getAsJsonObject().get("base_volume").getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

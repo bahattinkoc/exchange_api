@@ -89,6 +89,7 @@ public class Upbit extends General { // https://api.upbit.com/v1/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /candles/minutes/5?market=KRW-BTC&count=3
         [
            {
@@ -107,25 +108,26 @@ public class Upbit extends General { // https://api.upbit.com/v1/
         ]
         */
 
-        //Bunların hepsini yapabiliyor
-        String intervalResolution = (interval == Interval.INT_1MIN) ? "minutes/1" : (interval == Interval.INT_3MIN) ? "minutes/3"
-                : (interval == Interval.INT_5MIN) ? "minutes/5" : (interval == Interval.INT_15MIN) ? "minutes/15"
-                : (interval == Interval.INT_30MIN) ? "minutes/30" : (interval == Interval.INT_1HOUR) ? "minutes/60"
-                : (interval == Interval.INT_4HOURS) ? "minutes/240" : (interval == Interval.INT_1DAY) ? "days"
-                : (interval == Interval.INT_1WEEK) ? "weeks" : "months";
+            //Bunların hepsini yapabiliyor
+            String intervalResolution = (interval == Interval.INT_1MIN) ? "minutes/1" : (interval == Interval.INT_3MIN) ? "minutes/3"
+                    : (interval == Interval.INT_5MIN) ? "minutes/5" : (interval == Interval.INT_15MIN) ? "minutes/15"
+                    : (interval == Interval.INT_30MIN) ? "minutes/30" : (interval == Interval.INT_1HOUR) ? "minutes/60"
+                    : (interval == Interval.INT_4HOURS) ? "minutes/240" : (interval == Interval.INT_1DAY) ? "days" : "weeks";
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.upbit.com/v1/candles/" + intervalResolution + "?market=" + symbol + "&count=200"))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.upbit.com/v1/candles/" + intervalResolution + "?market=" + symbol + "&count=200"))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("opening_price").getAsBigDecimal(),
-                    e.getAsJsonObject().get("high_price").getAsBigDecimal(),
-                    e.getAsJsonObject().get("low_price").getAsBigDecimal(),
-                    e.getAsJsonObject().get("trade_price").getAsBigDecimal(),
-                    e.getAsJsonObject().get("candle_acc_trade_volume").getAsBigDecimal()));
-        Collections.reverse(list);
-        return list;
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("opening_price").getAsBigDecimal(),
+                        e.getAsJsonObject().get("high_price").getAsBigDecimal(),
+                        e.getAsJsonObject().get("low_price").getAsBigDecimal(),
+                        e.getAsJsonObject().get("trade_price").getAsBigDecimal(),
+                        e.getAsJsonObject().get("candle_acc_trade_volume").getAsBigDecimal()));
+            Collections.reverse(list);
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

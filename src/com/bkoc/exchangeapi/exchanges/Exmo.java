@@ -85,6 +85,7 @@ public class Exmo extends General { // https://api.exmo.com/v1.1/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /candles_history?symbol=BTC_USD&resolution=30&from=1585556979&to=1585557979
         {
           "candles": [
@@ -100,29 +101,30 @@ public class Exmo extends General { // https://api.exmo.com/v1.1/
         }
         */
 
-        //1, 5, 15, 30, 45, 60, 120, 180, 240, D, W, M
-        String intervalResolution = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5"
-                : (interval == Interval.INT_15MIN) ? "15" : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60"
-                : (interval == Interval.INT_2HOURS) ? "120" : (interval == Interval.INT_4HOURS) ? "240" : (interval == Interval.INT_1DAY) ? "D"
-                : (interval == Interval.INT_1WEEK) ? "W" : "M";
+            //1, 5, 15, 30, 45, 60, 120, 180, 240, D, W, M
+            String intervalResolution = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_5MIN) ? "5"
+                    : (interval == Interval.INT_15MIN) ? "15" : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60"
+                    : (interval == Interval.INT_2HOURS) ? "120" : (interval == Interval.INT_4HOURS) ? "240" : (interval == Interval.INT_1DAY) ? "D" : "W" ;
 
-        int intervalInt = (interval == Interval.INT_1DAY) ? 1440 : (interval == Interval.INT_1WEEK) ? 10080 : (interval == Interval.INT_1MONTH) ? 43200 : Integer.parseInt(intervalResolution);
-        long from = (System.currentTimeMillis() / 1000L) - (intervalInt * 300 * 60);
-        long to = System.currentTimeMillis() / 1000L;
+            int intervalInt = (interval == Interval.INT_1DAY) ? 1440 : (interval == Interval.INT_1WEEK) ? 10080 : Integer.parseInt(intervalResolution);
+            long from = (System.currentTimeMillis() / 1000L) - (intervalInt * 300 * 60);
+            long to = System.currentTimeMillis() / 1000L;
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.exmo.com/v1.1/candles_history?symbol=" + symbol + "&resolution=" + intervalResolution + "&from=" + from + "&to=" + to))
-                .getAsJsonObject().get("candles")
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.exmo.com/v1.1/candles_history?symbol=" + symbol + "&resolution=" + intervalResolution + "&from=" + from + "&to=" + to))
+                    .getAsJsonObject().get("candles")
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("o").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("h").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("l").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("c").getAsBigDecimal().stripTrailingZeros(),
-                    e.getAsJsonObject().get("v").getAsBigDecimal().stripTrailingZeros()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("o").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("h").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("l").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("c").getAsBigDecimal().stripTrailingZeros(),
+                        e.getAsJsonObject().get("v").getAsBigDecimal().stripTrailingZeros()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

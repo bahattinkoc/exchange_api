@@ -86,6 +86,7 @@ public class Bitpanda extends General { // https://api.exchange.bitpanda.com/pub
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /candlesticks/{instrument_code}?unit=HOURS&period=1&from=2019-10-03T04%3A59%3A59.999Z&to=2019-10-03T07%3A59%3A59.999Z
         [
           {
@@ -107,39 +108,39 @@ public class Bitpanda extends General { // https://api.exchange.bitpanda.com/pub
         ]
         */
 
-        //1, 5, 15, 30 MINUTES & 1, 4 HOURS & 1 DAYS & 1 WEEKS & 1 MONTHS.
-        String intervalPeriod = (interval == Interval.INT_1MIN) ? "MINUTES&period=1"
-                : (interval == Interval.INT_5MIN) ? "MINUTES&period=5" : (interval == Interval.INT_15MIN) ? "MINUTES&period=15"
-                : (interval == Interval.INT_30MIN) ? "MINUTES&period=30" : (interval == Interval.INT_1HOUR) ? "HOURS&period=1"
-                : (interval == Interval.INT_4HOURS) ? "HOURS&period=4" : (interval == Interval.INT_1DAY) ? "DAYS&period=1"
-                : (interval == Interval.INT_1WEEK) ? "WEEKS&period=1" : "MONTHS&period=1";
+            //1, 5, 15, 30 MINUTES & 1, 4 HOURS & 1 DAYS & 1 WEEKS & 1 MONTHS.
+            String intervalPeriod = (interval == Interval.INT_1MIN) ? "MINUTES&period=1"
+                    : (interval == Interval.INT_5MIN) ? "MINUTES&period=5" : (interval == Interval.INT_15MIN) ? "MINUTES&period=15"
+                    : (interval == Interval.INT_30MIN) ? "MINUTES&period=30" : (interval == Interval.INT_1HOUR) ? "HOURS&period=1"
+                    : (interval == Interval.INT_4HOURS) ? "HOURS&period=4" : "DAYS&period=1";
 
-        int internalSeconds = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_5MIN) ? 300
-                : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
-                : (interval == Interval.INT_4HOURS) ? 14400 : (interval == Interval.INT_1DAY) ? 86400
-                : (interval == Interval.INT_1WEEK) ? 7 * 86400 : 30 * 86400;
+            int internalSeconds = (interval == Interval.INT_1MIN) ? 60 : (interval == Interval.INT_5MIN) ? 300
+                    : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
+                    : (interval == Interval.INT_4HOURS) ? 14400 : 86400;
 
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS&");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss.SSS&");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-        calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L));
-        String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
+            calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L));
+            String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-        JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.exchange.bitpanda.com/public/v1/" +
-                        "candlesticks/" + symbol + "?unit=" + intervalPeriod + "&from=" + start_time + "&to=" + end_time))
-                .getAsJsonArray();
+            JsonArray klinesJson = JsonParser
+                    .parseString(response("https://api.exchange.bitpanda.com/public/v1/" +
+                            "candlesticks/" + symbol + "?unit=" + intervalPeriod + "&from=" + start_time + "&to=" + end_time))
+                    .getAsJsonArray();
 
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : klinesJson)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(),
-                    e.getAsJsonObject().get("high").getAsBigDecimal(),
-                    e.getAsJsonObject().get("low").getAsBigDecimal(),
-                    e.getAsJsonObject().get("close").getAsBigDecimal(),
-                    e.getAsJsonObject().get("total_amount").getAsBigDecimal()));
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : klinesJson)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(),
+                        e.getAsJsonObject().get("high").getAsBigDecimal(),
+                        e.getAsJsonObject().get("low").getAsBigDecimal(),
+                        e.getAsJsonObject().get("close").getAsBigDecimal(),
+                        e.getAsJsonObject().get("total_amount").getAsBigDecimal()));
 
-        return list;
+            return list;
+        }
+        catch (Exception e) { return null; }
     }
 }

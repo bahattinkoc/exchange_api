@@ -122,6 +122,7 @@ public class ByBit extends General { // https://api.bybit.com/
     }
 
     public static List<Candlestick> klines(String symbol, Interval interval) throws Exception {
+        try {
         /* GET /v2/public/kline/list?symbol=BTCUSD&interval=1&limit=2&from=1581231260
         {
             "ret_code": 0,
@@ -153,29 +154,33 @@ public class ByBit extends General { // https://api.bybit.com/
         }
         */
 
-        //Bunların hepsini yapabiliyor
-        String intervalResolution = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_3MIN) ? "3" : (interval == Interval.INT_5MIN) ? "5"
-                : (interval == Interval.INT_15MIN) ? "15" : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60"
-                : (interval == Interval.INT_2HOURS) ? "120" : (interval == Interval.INT_4HOURS) ? "240" : (interval == Interval.INT_6HOURS) ? "360"
-                : (interval == Interval.INT_12HOURS) ? "720" : (interval == Interval.INT_1DAY) ? "D" : (interval == Interval.INT_1WEEK) ? "W" : "M";
+            //Bunların hepsini yapabiliyor
+            String intervalResolution = (interval == Interval.INT_1MIN) ? "1" : (interval == Interval.INT_3MIN) ? "3" : (interval == Interval.INT_5MIN) ? "5"
+                    : (interval == Interval.INT_15MIN) ? "15" : (interval == Interval.INT_30MIN) ? "30" : (interval == Interval.INT_1HOUR) ? "60"
+                    : (interval == Interval.INT_2HOURS) ? "120" : (interval == Interval.INT_4HOURS) ? "240" : (interval == Interval.INT_6HOURS) ? "360"
+                    : (interval == Interval.INT_12HOURS) ? "720" : (interval == Interval.INT_1DAY) ? "D" : "W";
 
-        long from = (interval == Interval.INT_1DAY) ? 1440 : (interval == Interval.INT_1WEEK) ? 10080 : (interval == Interval.INT_1MONTH) ? 40320 : Long.parseLong(intervalResolution);
-        from = (System.currentTimeMillis() / 1000L) - (200 * from * 60);
+            long from = (interval == Interval.INT_1DAY) ? 1440 : (interval == Interval.INT_1WEEK) ? 10080 : Long.parseLong(intervalResolution);
+            from = (System.currentTimeMillis() / 1000L) - (200 * from * 60);
 
-        JsonObject klinesJson = JsonParser
-                .parseString(response("https://api.bybit.com/v2/public/kline/list?symbol=" + symbol + "&interval=" + intervalResolution + "&limit=200&from=" + from))
-                .getAsJsonObject();
-
-        if (!klinesJson.get("ret_msg").getAsString().equals("OK"))
-            klinesJson = JsonParser
-                    .parseString(response("https://api.bybit.com/public/linear/kline?symbol=" + symbol + "&interval=" + intervalResolution + "&limit=200&from=" + from))
+            JsonObject klinesJson = JsonParser
+                    .parseString(response("https://api.bybit.com/v2/public/kline/list?symbol=" + symbol + "&interval=" + intervalResolution + "&limit=200&from=" + from))
                     .getAsJsonObject();
 
-        JsonArray jsonArray = klinesJson.get("result").getAsJsonArray();
-        List<Candlestick> list = new LinkedList<>();
-        for (JsonElement e : jsonArray)
-            list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
+            if (!klinesJson.get("ret_msg").getAsString().equals("OK"))
+                klinesJson = JsonParser
+                        .parseString(response("https://api.bybit.com/public/linear/kline?symbol=" + symbol + "&interval=" + intervalResolution + "&limit=200&from=" + from))
+                        .getAsJsonObject();
 
-        return list;
+            JsonArray jsonArray = klinesJson.get("result").getAsJsonArray();
+            List<Candlestick> list = new LinkedList<>();
+            for (JsonElement e : jsonArray)
+                list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
+
+            return list;
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 }
