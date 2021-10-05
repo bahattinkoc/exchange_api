@@ -136,7 +136,7 @@ public class Probit extends General { // https://api.probit.com/api/exchange/v1/
             calendar.setTimeInMillis(System.currentTimeMillis());
             String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-            calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L));
+            calendar.setTimeInMillis((System.currentTimeMillis()) - (200L * internalSeconds * 1000L));
             String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
             JsonArray klinesJson = JsonParser

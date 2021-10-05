@@ -130,7 +130,7 @@ public class BitBay extends General { // https://api.bitbay.net/rest/trading/
                     : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
                     : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
 
-            long from = System.currentTimeMillis() - (intervalResolution * 300 * 1000L);
+            long from = System.currentTimeMillis() - (intervalResolution * 200 * 1000L);
             long to = System.currentTimeMillis();
 
             JsonArray klinesJson = JsonParser

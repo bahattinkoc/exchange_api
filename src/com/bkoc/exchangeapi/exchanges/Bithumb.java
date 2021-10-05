@@ -143,10 +143,10 @@ public class Bithumb extends General { // https://api.bithumb.com
                 list.add(new Candlestick(obj.get(1).getAsBigDecimal(), obj.get(3).getAsBigDecimal(), obj.get(4).getAsBigDecimal(), obj.get(2).getAsBigDecimal(), obj.get(5).getAsBigDecimal()));
             }
 
-            if (list.size() < 310)
+            if (list.size() < 210)
                 return list;
             else
-                return list.subList(list.size() - 300, list.size());
+                return list.subList(list.size() - 200, list.size());
         }
         catch (Exception e) { return null; }
     }

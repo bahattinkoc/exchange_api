@@ -116,10 +116,10 @@ public class Bittrex extends General { // https://api.bittrex.com/v3/
             for (JsonElement e : klinesJson)
                 list.add(new Candlestick(e.getAsJsonObject().get("open").getAsBigDecimal(), e.getAsJsonObject().get("high").getAsBigDecimal(), e.getAsJsonObject().get("low").getAsBigDecimal(), e.getAsJsonObject().get("close").getAsBigDecimal(), e.getAsJsonObject().get("volume").getAsBigDecimal()));
 
-            if (list.size() < 310)
+            if (list.size() < 210)
                 return list;
             else
-                return list.subList(list.size() - 300, list.size());
+                return list.subList(list.size() - 200, list.size());
         }
         catch (Exception e) { return null; }
     }

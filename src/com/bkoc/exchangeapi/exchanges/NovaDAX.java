@@ -129,7 +129,7 @@ public class NovaDAX extends General { // https://api.novadax.com/v1/
                     : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800 : (interval == Interval.INT_1HOUR) ? 3600
                     : (interval == Interval.INT_1DAY) ? 86400 : 7 * 86400;
 
-            long from = (System.currentTimeMillis() / 1000L) - (intervalInt * 300);
+            long from = (System.currentTimeMillis() / 1000L) - (intervalInt * 200);
             long to = System.currentTimeMillis() / 1000L;
 
             JsonArray klinesJson = JsonParser

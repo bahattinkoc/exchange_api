@@ -113,7 +113,7 @@ public class MEXC extends General { // https://www.mexc.com/open/api/v2/market/
                     : (interval == Interval.INT_4HOURS) ? "4h" : "1d";
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://www.mexc.com/open/api/v2/market/kline?symbol=" + symbol + "&interval=" + intervalPeriod + "&limit=300"))
+                    .parseString(response("https://www.mexc.com/open/api/v2/market/kline?symbol=" + symbol + "&interval=" + intervalPeriod + "&limit=200"))
                     .getAsJsonObject().get("data")
                     .getAsJsonArray();
 

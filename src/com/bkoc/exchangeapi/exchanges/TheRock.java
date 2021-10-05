@@ -123,7 +123,7 @@ public class TheRock extends General { // https://api.therocktrading.com/v1/
             calendar.setTimeInMillis(System.currentTimeMillis());
             String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-            calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L * 60));
+            calendar.setTimeInMillis((System.currentTimeMillis()) - (200L * internalSeconds * 1000L * 60));
             String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
             JsonArray klinesJson = JsonParser

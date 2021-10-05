@@ -107,7 +107,7 @@ public class Exmo extends General { // https://api.exmo.com/v1.1/
                     : (interval == Interval.INT_2HOURS) ? "120" : (interval == Interval.INT_4HOURS) ? "240" : (interval == Interval.INT_1DAY) ? "D" : "W" ;
 
             int intervalInt = (interval == Interval.INT_1DAY) ? 1440 : (interval == Interval.INT_1WEEK) ? 10080 : Integer.parseInt(intervalResolution);
-            long from = (System.currentTimeMillis() / 1000L) - (intervalInt * 300 * 60);
+            long from = (System.currentTimeMillis() / 1000L) - (intervalInt * 200 * 60L);
             long to = System.currentTimeMillis() / 1000L;
 
             JsonArray klinesJson = JsonParser

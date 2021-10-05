@@ -123,7 +123,7 @@ public class Bitpanda extends General { // https://api.exchange.bitpanda.com/pub
             calendar.setTimeInMillis(System.currentTimeMillis());
             String end_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
-            calendar.setTimeInMillis((System.currentTimeMillis()) - (300L * internalSeconds * 1000L));
+            calendar.setTimeInMillis((System.currentTimeMillis()) - (200 * internalSeconds * 1000L));
             String start_time = dateFormatter.format(calendar.getTime()).replace("_", "T").replace("&", "Z");
 
             JsonArray klinesJson = JsonParser

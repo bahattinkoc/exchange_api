@@ -135,7 +135,7 @@ public class AscendEX extends General { // https://ascendex.com/api/pro/v1/
                     : (interval == Interval.INT_12HOURS) ? "720" : (interval == Interval.INT_1DAY) ? "1d" : "1w";
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://ascendex.com/api/pro/v1/barhist?symbol=" + symbol + "&interval=" + intervalResolution + "&n=300"))
+                    .parseString(response("https://ascendex.com/api/pro/v1/barhist?symbol=" + symbol + "&interval=" + intervalResolution + "&n=200"))
                     .getAsJsonObject().get("data")
                     .getAsJsonArray();
 

@@ -158,7 +158,7 @@ public class Huobi extends General { // https://api.huobi.pro/
                     : (interval == Interval.INT_1DAY) ? "1day" : "1week";
 
             JsonArray klinesAsJsonArray = JsonParser
-                    .parseString(response("https://api.huobi.pro/market/history/kline?period=" + intervalStr + "&size=300&symbol=" + symbol))
+                    .parseString(response("https://api.huobi.pro/market/history/kline?period=" + intervalStr + "&size=200&symbol=" + symbol))
                     .getAsJsonObject().get("data")
                     .getAsJsonArray();
 

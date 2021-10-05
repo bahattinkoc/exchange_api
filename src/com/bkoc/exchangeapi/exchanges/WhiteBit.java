@@ -120,11 +120,11 @@ public class WhiteBit extends General { // https://whitebit.com/api/v4/public/ -
                     : (interval == Interval.INT_8HOURS) ? 28800 : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400
                     : (interval == Interval.INT_3DAYS) ? 3 * 86400 : 7 * 86400;
 
-            long from = (System.currentTimeMillis() / 1000L) - (intervalResolution * 300);
+            long from = (System.currentTimeMillis() / 1000L) - (intervalResolution * 200);
             long to = System.currentTimeMillis() / 1000L;
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://whitebit.com/api/v1/public/kline?market=" + symbol + "&interval=" + interval.getValue() + "&limit=301&start=" + from + "&end=" + to))
+                    .parseString(response("https://whitebit.com/api/v1/public/kline?market=" + symbol + "&interval=" + interval.getValue() + "&limit=201&start=" + from + "&end=" + to))
                     .getAsJsonObject().get("result")
                     .getAsJsonArray();
 

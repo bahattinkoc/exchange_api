@@ -130,10 +130,10 @@ public class Cryptocom extends General { // https://api.crypto.com/v2/
             for (JsonElement e : klinesJson)
                 list.add(new Candlestick(e.getAsJsonObject().get("o").getAsBigDecimal(), e.getAsJsonObject().get("h").getAsBigDecimal(), e.getAsJsonObject().get("l").getAsBigDecimal(), e.getAsJsonObject().get("c").getAsBigDecimal(), e.getAsJsonObject().get("v").getAsBigDecimal()));
 
-            if (list.size() < 310)
+            if (list.size() < 210)
                 return list;
             else
-                return list.subList(list.size() - 300, list.size());
+                return list.subList(list.size() - 200, list.size());
         }
         catch (Exception e) { return null; }
     }

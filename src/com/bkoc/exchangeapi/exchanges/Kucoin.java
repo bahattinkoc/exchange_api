@@ -149,10 +149,10 @@ public class Kucoin extends General { // https://api.kucoin.com
             }
             Collections.reverse(list);
 
-            if (list.size() < 310)
+            if (list.size() < 210)
                 return list;
             else
-                return list.subList(list.size() - 300, list.size());
+                return list.subList(list.size() - 200, list.size());
         }
         catch (Exception e) { return null; }
     }

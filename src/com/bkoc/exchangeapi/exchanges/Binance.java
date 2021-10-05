@@ -151,7 +151,7 @@ public class Binance extends General { //https://www.binance.com/api/
         ]*/
 
             JsonArray klinesAsJsonArray = JsonParser
-                    .parseString(response("https://www.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval.getValue() + "&limit=300"))
+                    .parseString(response("https://www.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval.getValue() + "&limit=200"))
                     .getAsJsonArray();
 
             List<Candlestick> list = new LinkedList<>();

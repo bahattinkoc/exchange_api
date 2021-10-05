@@ -104,7 +104,7 @@ public class Bitstamp extends General { // https://www.bitstamp.net/api/v2/
                     : (interval == Interval.INT_12HOURS) ? 43200 : (interval == Interval.INT_1DAY) ? 86400 : 3 * 86400;
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://www.bitstamp.net/api/v2/ohlc/" + symbol.toLowerCase(Locale.ROOT) + "/?step=" + intervalResolution + "&limit=300"))
+                    .parseString(response("https://www.bitstamp.net/api/v2/ohlc/" + symbol.toLowerCase(Locale.ROOT) + "/?step=" + intervalResolution + "&limit=200"))
                     .getAsJsonObject().get("data")
                     .getAsJsonObject().get("ohlc")
                     .getAsJsonArray();

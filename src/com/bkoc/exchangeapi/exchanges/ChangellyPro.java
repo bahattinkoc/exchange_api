@@ -109,7 +109,7 @@ public class ChangellyPro extends General { //https://api.pro.changelly.com/api/
                     : (interval == Interval.INT_4HOURS) ? "H4" : (interval == Interval.INT_1DAY) ? "D1" : "D7";
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://api.pro.changelly.com/api/3/public/candles?symbols=" + symbol + "&period=" + intervalResolution + "&limit=300"))
+                    .parseString(response("https://api.pro.changelly.com/api/3/public/candles?symbols=" + symbol + "&period=" + intervalResolution + "&limit=200"))
                     .getAsJsonObject().get(symbol)
                     .getAsJsonArray();
 

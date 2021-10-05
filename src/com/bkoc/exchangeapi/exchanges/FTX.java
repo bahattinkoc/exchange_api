@@ -156,10 +156,10 @@ public class FTX extends General { //https://ftx.com/api/
                 list.add(new Candlestick(obj.get("open").getAsBigDecimal(), obj.get("high").getAsBigDecimal(), obj.get("low").getAsBigDecimal(), obj.get("close").getAsBigDecimal(), obj.get("volume").getAsBigDecimal()));
             }
 
-            if (list.size() < 310)
+            if (list.size() < 210)
                 return list;
             else
-                return list.subList(list.size() - 300, list.size());
+                return list.subList(list.size() - 200, list.size());
         }
         catch (Exception e) { return null; }
     }

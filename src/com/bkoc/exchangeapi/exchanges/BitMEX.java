@@ -303,7 +303,7 @@ public class BitMEX extends General { // https://www.bitmex.com/api/v1
                     : (interval == Interval.INT_1HOUR) ? "1h" : "1d";
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://www.bitmex.com/api/v1/trade/bucketed?binSize=" + intervalResolution + "&partial=true&symbol=" + symbol + "&count=300&reverse=true"))
+                    .parseString(response("https://www.bitmex.com/api/v1/trade/bucketed?binSize=" + intervalResolution + "&partial=true&symbol=" + symbol + "&count=200&reverse=true"))
                     .getAsJsonArray();
 
             List<Candlestick> list = new LinkedList<>();

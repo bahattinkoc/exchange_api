@@ -28,7 +28,7 @@ public class Main {
         //https://syncwith.com/api/coinpaprika/get/v1-global
 
         //FTX 3MIN--30MIN--2HOUR--6HOUR--8HOUR--12HOUR
-//        List<Candlestick> candlestickListFTX = FTX.klines("BTC/USD", Interval.INT_15MIN);
+//        List<Candlestick> candlestickListFTX = FTX.klines("ETH/BTC", Interval.INT_1DAY);
 //        List<BigDecimal> closesFTX = FTX.getValuesOfCandlestics(candlestickListFTX, General.OHLCV.CLOSE);
 //        for (BigDecimal i : closesFTX)
 //            System.out.println("Close: " + i);
@@ -40,16 +40,16 @@ public class Main {
 //        System.out.println("LastPrice: " + tickerFTX.get("lastPrice") + "\nPrice Change: " + tickerFTX.get("priceChange") + "\nPercent: " + tickerFTX.get("priceChangePercent") + "\nVolume: " + tickerFTX.get("volume"));
 
         //BINANCE
-        /*List<Candlestick> candlestickListBinance = Binance.klines("BTCUSDT", Interval.INT_1DAY, 300);
-        List<BigDecimal> closesBinance = Binance.getValuesOfCandlestics(candlestickListBinance, General.OHLCV.CLOSE);
-        for (BigDecimal i : closesBinance)
-            System.out.println("Close: " + i);
-        List<String> symbolsBinance = Binance.getSymbols();
-        for (String i : symbolsBinance)
-            System.out.println(i);
-        System.out.println("Size: " + symbolsBinance.size());
-        HashMap<String, BigDecimal> tickerBinance = Binance.ticker24hr("BTCUSDT");
-        System.out.println("LastPrice: " + tickerBinance.get("lastPrice") + "\nPrice Change: " + tickerBinance.get("priceChange") + "\nPercent: " + tickerBinance.get("priceChangePercent") + "\nVolume: " + tickerBinance.get("volume"));*/
+//        List<Candlestick> candlestickListBinance = Binance.klines("ZENBTC", Interval.INT_1DAY);
+//        List<BigDecimal> closesBinance = Binance.getValuesOfCandlestics(candlestickListBinance, General.OHLCV.CLOSE);
+//        for (BigDecimal i : closesBinance)
+//            System.out.println("Close: " + i);
+//        List<String> symbolsBinance = Binance.getSymbols();
+//        for (String i : symbolsBinance)
+//            System.out.println(i);
+//        System.out.println("Size: " + symbolsBinance.size());
+//        HashMap<String, BigDecimal> tickerBinance = Binance.ticker24hr("BTCUSDT");
+//        System.out.println("LastPrice: " + tickerBinance.get("lastPrice") + "\nPrice Change: " + tickerBinance.get("priceChange") + "\nPercent: " + tickerBinance.get("priceChangePercent") + "\nVolume: " + tickerBinance.get("volume"));
 
         //GATEIO
 //        List<String> gateioSpot = Gateio.getSymbols();
@@ -442,7 +442,7 @@ public class Main {
 //        for (String i : symbolsBitpanda)
 //            System.out.println(i);
 //        System.out.println("Size: " + symbolsBitpanda.size());
-//        List<Candlestick> closesBitpanda = Bitpanda.klines("BTC_EUR", Interval.INT_1DAY);
+//        List<Candlestick> closesBitpanda = Bitpanda.klines("BTC_EUR", Interval.INT_15MIN);
 //        List<BigDecimal> closesBitpandaList = Bitpanda.getValuesOfCandlestics(closesBitpanda, General.OHLCV.CLOSE);
 //        for (BigDecimal i : closesBitpandaList)
 //            System.out.println(i);

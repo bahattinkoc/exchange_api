@@ -118,7 +118,7 @@ public class Poloniex extends General { // https://poloniex.com/public
             int intervalResolution = (interval == Interval.INT_5MIN) ? 300 : (interval == Interval.INT_15MIN) ? 900 : (interval == Interval.INT_30MIN) ? 1800
                     : (interval == Interval.INT_2HOURS) ? 7200 : (interval == Interval.INT_4HOURS) ? 14400 : 86400;
 
-            long start = (System.currentTimeMillis() / 1000L) - (300 * intervalResolution);
+            long start = (System.currentTimeMillis() / 1000L) - (200 * intervalResolution);
 
             JsonArray klinesJson = JsonParser
                     .parseString(response("https://poloniex.com/public?command=returnChartData&currencyPair=" + symbol + "&start=" + start + "&end=" + (System.currentTimeMillis() / 1000L) + "&period=" + intervalResolution))

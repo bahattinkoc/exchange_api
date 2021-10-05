@@ -154,7 +154,7 @@ public class Currencycom extends General { // https://api-adapter.backend.curren
                     : (interval == Interval.INT_4HOURS) ? "4h" : (interval == Interval.INT_1DAY) ? "1d" : "1w";
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://api-adapter.backend.currency.com/api/v2/klines?symbol=" + symbol + "&interval=" + intervalResolution + "&limit=300"))
+                    .parseString(response("https://api-adapter.backend.currency.com/api/v2/klines?symbol=" + symbol + "&interval=" + intervalResolution + "&limit=200"))
                     .getAsJsonArray();
 
             List<Candlestick> list = new LinkedList<>();

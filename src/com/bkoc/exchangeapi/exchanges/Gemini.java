@@ -113,10 +113,10 @@ public class Gemini extends General { // https://api.gemini.com
                 list.add(new Candlestick(e.getAsJsonArray().get(1).getAsBigDecimal(), e.getAsJsonArray().get(2).getAsBigDecimal(), e.getAsJsonArray().get(3).getAsBigDecimal(), e.getAsJsonArray().get(4).getAsBigDecimal(), e.getAsJsonArray().get(5).getAsBigDecimal()));
             Collections.reverse(list);
 
-            if (list.size() < 310)
+            if (list.size() < 210)
                 return list;
             else
-                return list.subList(list.size() - 300, list.size());
+                return list.subList(list.size() - 200, list.size());
         }
         catch (Exception e) { return null; }
     }

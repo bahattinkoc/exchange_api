@@ -87,7 +87,7 @@ public class Bitfinex extends General { // https://api-pub.bitfinex.com/v2/
             String intervalStr = (interval == Interval.INT_1DAY) ? "1D" : (interval == Interval.INT_1WEEK) ? "7D" : interval.getValue();
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://api-pub.bitfinex.com/v2/candles/trade:" + intervalStr + ":t" + symbol + "/hist?limit=300"))
+                    .parseString(response("https://api-pub.bitfinex.com/v2/candles/trade:" + intervalStr + ":t" + symbol + "/hist?limit=200"))
                     .getAsJsonArray();
 
             List<Candlestick> list = new LinkedList<>();
