@@ -4,7 +4,6 @@ import com.bkoc.exchangeapi.Candlestick;
 import com.bkoc.exchangeapi.General;
 import com.bkoc.exchangeapi.Interval;
 import com.google.gson.*;
-import okhttp3.*;
 
 import java.io.IOException;
 import java.math.BigDecimal;

@@ -57,7 +57,8 @@ public class Gateio extends General { //https://api.gateio.ws/api/v4/
                 .getAsJsonArray();
 
         for (JsonElement i : symbolsList)
-            list.add(i.getAsJsonObject().get("id").getAsString());
+            if (i.getAsJsonObject().get("trade_status").getAsString().equals("tradable"))
+                list.add(i.getAsJsonObject().get("id").getAsString());
 
         return list;
     }

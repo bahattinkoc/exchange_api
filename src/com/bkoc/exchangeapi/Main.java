@@ -1,7 +1,6 @@
 package com.bkoc.exchangeapi;
 
 import com.bkoc.exchangeapi.exchanges.*;
-import okhttp3.OkHttpClient;
 
 import java.awt.*;
 import java.math.BigDecimal;
@@ -19,10 +18,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws Exception {
         //FAG FEAR & GREED
-        /*List<Float> fagList = FAG.getFAG(); // İlk eleman bugüne ait
-        for (float i : fagList)
-            System.out.println(i);
-        System.out.println("Size: " + fagList.size());*/
+//        List<Float> fagList = FAG.getFAG(); // İlk eleman bugüne ait
+//        for (float i : fagList)
+//            System.out.println(i);
+//        System.out.println("Size: " + fagList.size());
 
         //https://api.coingecko.com/api/v3/global
         //https://syncwith.com/api/coinpaprika/get/v1-global
@@ -56,7 +55,7 @@ public class Main {
 //        for (String i : gateioSpot)
 //            System.out.println(i);
 //        System.out.println("Size: " + gateioSpot.size());
-//        List<Candlestick> candlestickList = Gateio.klines("BTC_USDT", Interval.INT_1WEEK);
+//        List<Candlestick> candlestickList = Gateio.klines("ADD_ETH", Interval.INT_15MIN);
 //        List<BigDecimal> closesGateio = Gateio.getValuesOfCandlestics(candlestickList, General.OHLCV.CLOSE);
 //        for (BigDecimal i : closesGateio)
 //            System.out.println(i);
@@ -86,7 +85,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesKraken.size());
 //        HashMap<String, BigDecimal> tickerKraken = Kraken.ticker24hr("XXBTZUSD");
-//        System.out.println("LastPrice: " + tickerKraken.get("lastPrice") + "\nPrice Change: " + tickerKraken.get("priceChange") + "\nPercent: " + tickerKraken.get("priceChangePercent") + "\nVolume: " + tickerKraken.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerKraken.get("lastPrice") + "\nPrice Change: " + tickerKraken.get("priceChange") + "\nPercent: " + tickerKraken.get("priceChangePercent") + "\nVolume: " + tickerKraken.get("volume"));
 
         //KUCOIN
 //        List<String> symbolsKucoin = Kucoin.getSymbols();
@@ -99,7 +98,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesKucoinList.size());
 //        HashMap<String, BigDecimal> tickerKucoin = Kucoin.ticker24hr("BTC-USDT");
-//        System.out.println("LastPrice: " + tickerKucoin.get("lastPrice") + "\nPrice Change: " + tickerKucoin.get("priceChange") + "\nPercent: " + tickerKucoin.get("priceChangePercent") + "\nVolume: " + tickerKucoin.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerKucoin.get("lastPrice") + "\nPrice Change: " + tickerKucoin.get("priceChange") + "\nPercent: " + tickerKucoin.get("priceChangePercent") + "\nVolume: " + tickerKucoin.get("volume"));
 
         //COINBASEPRO
 //        List<String> symbolsCoinbasePro = CoinbasePro.getSymbols();
@@ -241,7 +240,7 @@ public class Main {
 //            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
 //        System.out.println("Size: " + closesPoloniexList.size());
 //        HashMap<String, BigDecimal> tickerPoloniex = Poloniex.ticker24hr("USDT_BTC");
-//        System.out.println("LastPrice: " + tickerPoloniex.get("lastPrice") + "\nPrice Change: " + tickerPoloniex.get("priceChange") + "\nPercent: " + tickerPoloniex.get("priceChangePercent") + "\nVolume: " + tickerPoloniex.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerPoloniex.get("lastPrice") + "\nPrice Change: " + tickerPoloniex.get("priceChange") + "\nPercent: " + tickerPoloniex.get("priceChangePercent") + "\nVolume: " + tickerPoloniex.get("volume"));
 
         //ASCENDEX
 //        List<String> symbolsAscendEX = AscendEX.getSymbols();
@@ -266,7 +265,7 @@ public class Main {
 //            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
 //        System.out.println("Size: " + closesHitBTCList.size());
 //        HashMap<String, BigDecimal> tickerHitBTC = HitBTC.ticker24hr("BTCUSDT");
-//        System.out.println("LastPrice: " + tickerHitBTC.get("lastPrice") + "\nPrice Change: " + tickerHitBTC.get("priceChange") + "\nPercent: " + tickerHitBTC.get("priceChangePercent") + "\nVolume: " + tickerHitBTC.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerHitBTC.get("lastPrice") + "\nPrice Change: " + tickerHitBTC.get("priceChange") + "\nPercent: " + tickerHitBTC.get("priceChangePercent") + "\nVolume: " + tickerHitBTC.get("volume"));
 
         //LIQUID
 //        List<String> symbolsLiquid = Liquid.getSymbols();
@@ -292,7 +291,7 @@ public class Main {
 //            System.out.println(i.setScale(2, RoundingMode.HALF_UP));
 //        System.out.println("Size: " + closesUpbitList.size());
 //        HashMap<String, BigDecimal> tickerUpbit = Upbit.ticker24hr("USDT-BTC");
-//        System.out.println("LastPrice: " + tickerUpbit.get("lastPrice") + "\nPrice Change: " + tickerUpbit.get("priceChange") + "\nPercent: " + tickerUpbit.get("priceChangePercent") + "\nVolume: " + tickerUpbit.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerUpbit.get("lastPrice") + "\nPrice Change: " + tickerUpbit.get("priceChange") + "\nPercent: " + tickerUpbit.get("priceChangePercent") + "\nVolume: " + tickerUpbit.get("volume"));
 
         //PROBIT 1DAY---1WEEK
 //        List<String> symbolsProbit = Probit.getSymbols();
@@ -305,7 +304,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesProbitList.size());
 //        HashMap<String, BigDecimal> tickerProbit = Probit.ticker24hr("BTC-USDT");
-//        System.out.println("LastPrice: " + tickerProbit.get("lastPrice") + "\nPrice Change: " + tickerProbit.get("priceChange") + "\nPercent: " + tickerProbit.get("priceChangePercent") + "\nVolume: " + tickerProbit.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerProbit.get("lastPrice") + "\nPrice Change: " + tickerProbit.get("priceChange") + "\nPercent: " + tickerProbit.get("priceChangePercent") + "\nVolume: " + tickerProbit.get("volume"));
 
         //CURRENCYCOM
 //        List<String> symbolsCurrencycom = Currencycom.getSymbols();
@@ -318,7 +317,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesCurrencycomList.size());
 //        HashMap<String, BigDecimal> tickerCurrencycom = Currencycom.ticker24hr("BTC/USDT");
-//        System.out.println("LastPrice: " + tickerCurrencycom.get("lastPrice") + "\nPrice Change: " + tickerCurrencycom.get("priceChange") + "\nPercent: " + tickerCurrencycom.get("priceChangePercent") + "\nVolume: " + tickerCurrencycom.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerCurrencycom.get("lastPrice") + "\nPrice Change: " + tickerCurrencycom.get("priceChange") + "\nPercent: " + tickerCurrencycom.get("priceChangePercent") + "\nVolume: " + tickerCurrencycom.get("volume"));
 
         //BITMEX
 //        List<String> symbolsBitMEX = BitMEX.getSymbols();
@@ -383,7 +382,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesExmoList.size());
 //        HashMap<String, BigDecimal> tickerExmo = Exmo.ticker24hr("BTC_USD");
-//        System.out.println("LastPrice: " + tickerExmo.get("lastPrice") + "\nPrice Change: " + tickerExmo.get("priceChange") + "\nPercent: " + tickerExmo.get("priceChangePercent") + "\nVolume: " + tickerExmo.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerExmo.get("lastPrice") + "\nPrice Change: " + tickerExmo.get("priceChange") + "\nPercent: " + tickerExmo.get("priceChangePercent") + "\nVolume: " + tickerExmo.get("volume"));
 
         //NOVADAX
 //        List<String> symbolsNovaDAX = NovaDAX.getSymbols();
@@ -396,7 +395,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesNovaDAXList.size());
 //        HashMap<String, BigDecimal> tickerNovaDAX = NovaDAX.ticker24hr("BTC_USDT");
-//        System.out.println("LastPrice: " + tickerNovaDAX.get("lastPrice") + "\nPrice Change: " + tickerNovaDAX.get("priceChange") + "\nPercent: " + tickerNovaDAX.get("priceChangePercent") + "\nVolume: " + tickerNovaDAX.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerNovaDAX.get("lastPrice") + "\nPrice Change: " + tickerNovaDAX.get("priceChange") + "\nPercent: " + tickerNovaDAX.get("priceChangePercent") + "\nVolume: " + tickerNovaDAX.get("volume"));
 
         //THEROCK 6hour---12hour---1DAY---1WEEK
 //        List<String> symbolsTheRock = TheRock.getSymbols();
@@ -409,7 +408,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesTheRockList.size());
 //        HashMap<String, BigDecimal> tickerTheRock = TheRock.ticker24hr("BTCUSDT");
-//        System.out.println("LastPrice: " + tickerTheRock.get("lastPrice") + "\nPrice Change: " + tickerTheRock.get("priceChange") + "\nPercent: " + tickerTheRock.get("priceChangePercent") + "\nVolume: " + tickerTheRock.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerTheRock.get("lastPrice") + "\nPrice Change: " + tickerTheRock.get("priceChange") + "\nPercent: " + tickerTheRock.get("priceChangePercent") + "\nVolume: " + tickerTheRock.get("volume"));
 
         //TIMEX
 //        List<String> symbolsTimeX = TimeX.getSymbols();
@@ -422,7 +421,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesTimeXList.size());
 //        HashMap<String, BigDecimal> tickerTimeX = TimeX.ticker24hr("LTCAUDT");
-//        System.out.println("LastPrice: " + tickerTimeX.get("lastPrice") + "\nPrice Change: " + tickerTimeX.get("priceChange") + "\nPercent: " + tickerTimeX.get("priceChangePercent") + "\nVolume: " + tickerTimeX.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerTimeX.get("lastPrice") + "\nPrice Change: " + tickerTimeX.get("priceChange") + "\nPercent: " + tickerTimeX.get("priceChangePercent") + "\nVolume: " + tickerTimeX.get("volume"));
 
         //WHITEBIT
 //        List<String> symbolsWhiteBit = WhiteBit.getSymbols();
@@ -435,7 +434,7 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesWhiteBitList.size());
 //        HashMap<String, BigDecimal> tickerWhiteBit = WhiteBit.ticker24hr("BTC_USDT");
-//        System.out.println("LastPrice: " + tickerWhiteBit.get("lastPrice") + "\nPrice Change: " + tickerWhiteBit.get("priceChange") + "\nPercent: " + tickerWhiteBit.get("priceChangePercent") + "\nVolume: " + tickerWhiteBit.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerWhiteBit.get("lastPrice") + "\nPrice Change: " + tickerWhiteBit.get("priceChange") + "\nPercent: " + tickerWhiteBit.get("priceChangePercent") + "\nVolume: " + tickerWhiteBit.get("volume"));
 
         //BITPANDA
 //        List<String> symbolsBitpanda = Bitpanda.getSymbols();
@@ -461,6 +460,6 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + closesMEXCList.size());
 //        HashMap<String, BigDecimal> tickerMEXC = MEXC.ticker24hr("BTC_USDT");
-//        System.out.println("LastPrice: " + tickerMEXC.get("lastPrice") + "\nPrice Change: " + tickerMEXC.get("priceChange") + "\nPercent: " + tickerMEXC.get("priceChangePercent") + "\nVolume: " + tickerMEXC.get("volume"));*/
+//        System.out.println("LastPrice: " + tickerMEXC.get("lastPrice") + "\nPrice Change: " + tickerMEXC.get("priceChange") + "\nPercent: " + tickerMEXC.get("priceChangePercent") + "\nVolume: " + tickerMEXC.get("volume"));
     }
 }
