@@ -67,7 +67,6 @@ public class General {
                 new InputStreamReader(responseStream, StandardCharsets.UTF_8))
                 .lines()
                 .collect(Collectors.joining("\n"));
-        System.out.println(text);
         return text;
     }
 }

@@ -23,6 +23,15 @@ public class Main {
 //            System.out.println(i);
 //        System.out.println("Size: " + fagList.size());
 
+//        List<HashMap<String, String>> top7 = Top7.getTop7();
+//        for (HashMap<String, String> i : top7)
+//            System.out.println("Name: " + i.get("name") + "\nSymbol: " + i.get("symbol") + "\nRank: " + i.get("rank") + "\nImage: " + i.get("small") + "\nPrice: " + i.get("price_btc") + "\n\n");
+
+//        HashMap<String, String> global = Global.getGlobal();
+//        for (String i : global.keySet())
+//            System.out.println(i + " -> " +global.get(i));
+//        System.out.println(Global.getPercent24h());
+
         //https://api.coingecko.com/api/v3/global
         //https://syncwith.com/api/coinpaprika/get/v1-global
 
