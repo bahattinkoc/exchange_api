@@ -21,10 +21,10 @@ public class Top7 extends General{ // https://www.coingecko.com/api/documentatio
         for (JsonElement i : jsonArray){
             JsonObject item = i.getAsJsonObject().get("item").getAsJsonObject();
             HashMap<String, String> hash = new HashMap<>();
-            hash.put("name", item.get("name").toString());
-            hash.put("symbol", item.get("symbol").toString());
+            hash.put("name", item.get("name").toString().replace("\"", ""));
+            hash.put("symbol", item.get("symbol").toString().replace("\"", ""));
             hash.put("rank", item.get("market_cap_rank").toString());
-            hash.put("small", item.get("small").toString());
+            hash.put("small", item.get("small").toString().replace("\"", ""));
             hash.put("price_btc", item.get("price_btc").toString());
             top7.add(hash);
         }

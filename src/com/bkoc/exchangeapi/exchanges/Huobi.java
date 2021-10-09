@@ -100,7 +100,7 @@ public class Huobi extends General { // https://api.huobi.pro/
         */
 
         JsonObject tickerObj = JsonParser
-                .parseString(response("https://api.huobi.pro/market/detail?symbol=" + symbol))
+                .parseString(response("https://api.huobi.pro/market/detail?symbol=" + symbol.toLowerCase(Locale.ROOT)))
                 .getAsJsonObject()
                 .get("tick")
                 .getAsJsonObject();
@@ -158,7 +158,7 @@ public class Huobi extends General { // https://api.huobi.pro/
                     : (interval == Interval.INT_1DAY) ? "1day" : "1week";
 
             JsonArray klinesAsJsonArray = JsonParser
-                    .parseString(response("https://api.huobi.pro/market/history/kline?period=" + intervalStr + "&size=200&symbol=" + symbol))
+                    .parseString(response("https://api.huobi.pro/market/history/kline?period=" + intervalStr + "&size=200&symbol=" + symbol.toLowerCase(Locale.ROOT)))
                     .getAsJsonObject().get("data")
                     .getAsJsonArray();
 

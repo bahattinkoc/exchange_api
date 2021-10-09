@@ -1,18 +1,14 @@
 package com.bkoc.exchangeapi;
 
-import java.io.BufferedReader;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class General {
     public enum OHLCV{
@@ -57,16 +53,20 @@ public class General {
         return null;
     }
 
-    public static String response(String urlLink) throws IOException {
-        URL url = new URL(urlLink);
-        URLConnection connection = url.openConnection();
-        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-        connection.setRequestProperty("accept", "application/json");
-        InputStream responseStream = connection.getInputStream();
-        String text = new BufferedReader(
-                new InputStreamReader(responseStream, StandardCharsets.UTF_8))
-                .lines()
-                .collect(Collectors.joining("\n"));
-        return text;
+    public static String response(String url) throws IOException {
+//        URL url = new URL(urlLink);
+//        URLConnection connection = url.openConnection();
+//        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+//        connection.setRequestProperty("accept", "application/json");
+//        InputStream responseStream = connection.getInputStream();
+//        String text = new BufferedReader(
+//                new InputStreamReader(responseStream, StandardCharsets.UTF_8))
+//                .lines()
+//                .collect(Collectors.joining("\n"));
+//        return text;
+
+        Request request = new Request.Builder().url(url).build();
+        Response response = (new OkHttpClient()).newCall(request).execute();
+        return response.body().string();
     }
 }

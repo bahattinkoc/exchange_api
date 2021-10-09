@@ -76,7 +76,7 @@ public class Main {
 //        List<String> symbolsHuobi = Huobi.getSymbols();
 //        for (String i : symbolsHuobi)
 //            System.out.println(i);
-//        List<Candlestick> candlesticksHuobi = Huobi.klines("btcusdt", Interval.INT_1WEEK);
+//        List<Candlestick> candlesticksHuobi = Huobi.klines("18CBTC", Interval.INT_1HOUR);
 //        List<BigDecimal> closesHuobi = Huobi.getValuesOfCandlestics(candlesticksHuobi, General.OHLCV.CLOSE);
 //        for (BigDecimal i : closesHuobi)
 //            System.out.println(i);
