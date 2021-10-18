@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class General {
     public enum OHLCV{
@@ -64,9 +65,19 @@ public class General {
 //                .lines()
 //                .collect(Collectors.joining("\n"));
 //        return text;
-
-        Request request = new Request.Builder().url(url).build();
-        Response response = (new OkHttpClient()).newCall(request).execute();
-        return response.body().string();
+        try {
+            OkHttpClient innerClient = new OkHttpClient.Builder()
+                    .writeTimeout(5, TimeUnit.SECONDS) // write timeout
+                    .readTimeout(5, TimeUnit.SECONDS) // read timeout
+                    .build();
+            Request request = new Request.Builder().url(url).build();
+            Response response = (innerClient).newCall(request).execute();
+            String res = Objects.requireNonNull(response.body()).string();
+            response.close();
+            return res;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

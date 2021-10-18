@@ -18,10 +18,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws Exception {
         //FAG FEAR & GREED
-//        List<Float> fagList = FAG.getFAG(); // İlk eleman bugüne ait
-//        for (float i : fagList)
-//            System.out.println(i);
-//        System.out.println("Size: " + fagList.size());
+        List<Float> fagList = FAG.getFAG(); // İlk eleman bugüne ait
+        for (float i : fagList)
+            System.out.println(i);
+        System.out.println("Size: " + fagList.size());
 
 //        List<HashMap<String, String>> top7 = Top7.getTop7();
 //        for (HashMap<String, String> i : top7)
@@ -32,7 +32,6 @@ public class Main {
 //            System.out.println(i + " -> " +global.get(i));
 //        System.out.println(Global.getPercent24h());
 
-        //https://api.coingecko.com/api/v3/global
         //https://syncwith.com/api/coinpaprika/get/v1-global
 
         //FTX 3MIN--30MIN--2HOUR--6HOUR--8HOUR--12HOUR
@@ -45,7 +44,7 @@ public class Main {
 //        for (String i : symbolsFTX)
 //            System.out.println(i);
 //        HashMap<String, BigDecimal> tickerFTX = FTX.ticker24hr("BEAR/USD");
-//        System.out.println("LastPrice: " + tickerFTX.get("lastPrice") + "\nPrice Change: " + tickerFTX.get("priceChange") + "\nPercent: " + tickerFTX.get("priceChangePercent") + "\nVolume: " + tickerFTX.get("volume"));
+//        System.out.println("LastPrice: " + tickerFTX.get("lastPrice") + "\nPrice Change: " + tickerFTX.get("priceChange").toPlainString() + "\nPercent: " + tickerFTX.get("priceChangePercent") + "\nVolume: " + tickerFTX.get("volume"));
 
         //BINANCE
 //        List<Candlestick> candlestickListBinance = Binance.klines("ZENBTC", Interval.INT_1DAY);

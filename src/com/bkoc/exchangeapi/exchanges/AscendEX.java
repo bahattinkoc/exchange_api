@@ -14,6 +14,7 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class AscendEX extends General { // https://ascendex.com/api/pro/v1/
     public static List<String> getSymbols() throws IOException {
@@ -38,8 +39,12 @@ public class AscendEX extends General { // https://ascendex.com/api/pro/v1/
         }
         */
 
+        String jsonString = response("https://ascendex.com/api/pro/v1/products");
+        if (Objects.isNull(jsonString))
+            return null;
+
         JsonArray symbolsListJsonArray = JsonParser
-                .parseString(response("https://ascendex.com/api/pro/v1/products"))
+                .parseString(jsonString)
                 .getAsJsonObject().get("data")
                 .getAsJsonArray();
 

@@ -22,15 +22,20 @@ public class Global extends General{ // https://www.coingecko.com/api/documentat
     }
 
     public static HashMap<String, String> getGlobal() throws IOException {
-        JsonObject jsonObj = JsonParser
-                .parseString(response("https://api.coingecko.com/api/v3/global"))
-                .getAsJsonObject().get("data")
-                .getAsJsonObject();
+        try {
+            JsonObject jsonObj = JsonParser
+                    .parseString(response("https://api.coingecko.com/api/v3/global"))
+                    .getAsJsonObject().get("data")
+                    .getAsJsonObject();
 
-        HashMap<String, String> global = new HashMap<>();
-        for (String i : jsonObj.get("market_cap_percentage").getAsJsonObject().keySet())
-            global.put(i, jsonObj.get("market_cap_percentage").getAsJsonObject().get(i).toString());
-        setPercent24h(jsonObj.get("market_cap_change_percentage_24h_usd").getAsBigDecimal());
-        return global;
+            HashMap<String, String> global = new HashMap<>();
+            for (String i : jsonObj.get("market_cap_percentage").getAsJsonObject().keySet())
+                global.put(i, jsonObj.get("market_cap_percentage").getAsJsonObject().get(i).toString());
+            setPercent24h(jsonObj.get("market_cap_change_percentage_24h_usd").getAsBigDecimal());
+            return global;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

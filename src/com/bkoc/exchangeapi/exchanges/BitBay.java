@@ -11,10 +11,7 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class BitBay extends General { // https://api.bitbay.net/rest/trading/
     public static List<String> getSymbols() throws IOException {
@@ -46,16 +43,16 @@ public class BitBay extends General { // https://api.bitbay.net/rest/trading/
         }
         */
 
+        String jsonString = response("https://api.bitbay.net/rest/trading/ticker");
+        if (Objects.isNull(jsonString))
+            return null;
+
         JsonObject symbolsListJsonObj = JsonParser
-                .parseString(response("https://api.bitbay.net/rest/trading/ticker"))
+                .parseString(jsonString)
                 .getAsJsonObject().get("items")
                 .getAsJsonObject();
 
-        List<String> symbolsList = new LinkedList<>();
-        for (String i : symbolsListJsonObj.keySet())
-            symbolsList.add(i);
-
-        return symbolsList;
+        return new LinkedList<>(symbolsListJsonObj.keySet());
     }
 
     public static HashMap<String, BigDecimal> ticker24hr(String symbol) throws IOException {
@@ -78,11 +75,11 @@ public class BitBay extends General { // https://api.bitbay.net/rest/trading/
         }
         */
 
-        long from = System.currentTimeMillis() - (86400 * 1 * 1000L);
+        long from = System.currentTimeMillis() - (86400 * 1000L);
         long to = System.currentTimeMillis();
 
         JsonArray klinesJson = JsonParser
-                .parseString(response("https://api.bitbay.net/rest/trading/candle/history/" + symbol + "/86400?from=" + from + "&to=" + to))
+                .parseString(Objects.requireNonNull(response("https://api.bitbay.net/rest/trading/candle/history/" + symbol + "/86400?from=" + from + "&to=" + to)))
                 .getAsJsonObject().get("items")
                 .getAsJsonArray();
 
@@ -134,7 +131,7 @@ public class BitBay extends General { // https://api.bitbay.net/rest/trading/
             long to = System.currentTimeMillis();
 
             JsonArray klinesJson = JsonParser
-                    .parseString(response("https://api.bitbay.net/rest/trading/candle/history/" + symbol + "/" + intervalResolution + "?from=" + from + "&to=" + to))
+                    .parseString(Objects.requireNonNull(response("https://api.bitbay.net/rest/trading/candle/history/" + symbol + "/" + intervalResolution + "?from=" + from + "&to=" + to)))
                     .getAsJsonObject().get("items")
                     .getAsJsonArray();
 

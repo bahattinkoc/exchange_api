@@ -12,23 +12,28 @@ import java.util.List;
 
 public class Top7 extends General{ // https://www.coingecko.com/api/documentations/v3
     public static List<HashMap<String, String>> getTop7() throws IOException {
-        JsonArray jsonArray = JsonParser
-                .parseString(response("https://api.coingecko.com/api/v3/search/trending"))
-                .getAsJsonObject().get("coins")
-                .getAsJsonArray();
+        try {
+            JsonArray jsonArray = JsonParser
+                    .parseString(response("https://api.coingecko.com/api/v3/search/trending"))
+                    .getAsJsonObject().get("coins")
+                    .getAsJsonArray();
 
-        List<HashMap<String, String>> top7 = new LinkedList<>();
-        for (JsonElement i : jsonArray){
-            JsonObject item = i.getAsJsonObject().get("item").getAsJsonObject();
-            HashMap<String, String> hash = new HashMap<>();
-            hash.put("name", item.get("name").toString().replace("\"", ""));
-            hash.put("symbol", item.get("symbol").toString().replace("\"", ""));
-            hash.put("rank", item.get("market_cap_rank").toString());
-            hash.put("small", item.get("small").toString().replace("\"", ""));
-            hash.put("price_btc", item.get("price_btc").toString());
-            top7.add(hash);
+            List<HashMap<String, String>> top7 = new LinkedList<>();
+            for (JsonElement i : jsonArray) {
+                JsonObject item = i.getAsJsonObject().get("item").getAsJsonObject();
+                HashMap<String, String> hash = new HashMap<>();
+                hash.put("name", item.get("name").toString().replace("\"", ""));
+                hash.put("symbol", item.get("symbol").toString().replace("\"", ""));
+                hash.put("rank", item.get("market_cap_rank").toString());
+                hash.put("small", item.get("small").toString().replace("\"", ""));
+                hash.put("price_btc", item.get("price_btc").toString());
+                top7.add(hash);
+            }
+
+            return top7;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-
-        return top7;
     }
 }
